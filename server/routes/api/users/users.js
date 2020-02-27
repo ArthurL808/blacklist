@@ -9,4 +9,12 @@ router.get('/', (req,res)=>{
     })
 })
 
+router.get('/:id', (req,res) => {
+    return req.db.User.where({id: req.params.id}).fetch().then(results => {
+        res.json(results)
+    }).catch(err => {
+        console.log(err)
+    })
+})
+
 module.exports = router;

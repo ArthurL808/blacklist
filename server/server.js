@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const userRoutes = require('./routes/api/users');
+const api = require('./routes/api/index')
 const decorator = require('./database/decorator');
 
 
@@ -21,11 +21,8 @@ app.use(bodyParser.json({ extended: true }));
 app.use(decorator);
 
 // routes
-app.use('/api', userRoutes);
-app.get('/api/smoke', (req, res) => {
-  res.json({ smoke: 'test' });
-});
-
+app.use('/api/users', api.users);
+app.use('/api/defendants', api.defendants)
 
 app.listen(PORT, () => {
   console.log(`Server stated on port: ${PORT}`);
