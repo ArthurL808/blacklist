@@ -1,7 +1,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable("reasons", table => {
     table.increments();
-    table.string("name");
+    table.string("reason");
     table.timestamps(true,true);
   });
 };

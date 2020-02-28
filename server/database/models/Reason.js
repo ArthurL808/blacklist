@@ -9,8 +9,6 @@ class Reason extends bookshelf.Model {
     get hasTimestamps(){
         return true;
     }
-
-    
 }
 
 module.exports = bookshelf.model("Reasons",Reason)
