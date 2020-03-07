@@ -9,6 +9,10 @@ class Reason extends bookshelf.Model {
     get hasTimestamps(){
         return true;
     }
+
+    bails(){
+        return this.belongsToMany('Bail')
+    }
 }
 
 module.exports = bookshelf.model("Reasons",Reason)

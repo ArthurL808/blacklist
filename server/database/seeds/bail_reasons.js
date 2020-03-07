@@ -1,10 +1,10 @@
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex("blacklistReasons")
+  return knex("bails_reasons")
     .del()
     .then(function() {
       // Inserts seed entries
-      return knex("blacklistReasons").insert([
+      return knex("bails_reasons").insert([
         {
           reason_id: 7,
           bail_id: 53

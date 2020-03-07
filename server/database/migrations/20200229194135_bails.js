@@ -3,16 +3,6 @@ exports.up = function(knex) {
     table.increments();
     table.boolean("balance");
     table
-      .integer("case_id")
-      .references("id")
-      .inTable("cases")
-      .onDelete("CASCADE");
-    table
-      .integer("cosigner_id")
-      .references("id")
-      .inTable("coSigners")
-      .onDelete("CASCADE");
-    table
       .integer("user_id")
       .references("id")
       .inTable("users")
