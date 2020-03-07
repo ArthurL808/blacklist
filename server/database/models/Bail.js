@@ -14,15 +14,15 @@ class Bail extends bookshelf.Model {
   }
 
   cases() {
-    return this.hasMany("BailCase");
+    return this.belongsToMany("Case", 'bails_cases');
   }
 
   cosigners() {
-    return this.hasMany("BailCosigner");
+    return this.belongsToMany("Cosigner", "bails_cosigners");
   }
 
   reasons() {
-    return this.hasMany("BailReason");
+    return this.belongsToMany("Reasons","bails_reasons");
   }
 }
 

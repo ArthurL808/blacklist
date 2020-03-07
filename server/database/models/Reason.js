@@ -11,7 +11,7 @@ class Reason extends bookshelf.Model {
     }
 
     bails(){
-        return this.belongsToMany('Bail')
+        return this.belongsToMany('Bail', 'bails_reasons')
     }
 }
 
