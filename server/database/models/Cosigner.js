@@ -14,7 +14,7 @@ class Cosigner extends bookshelf.Model {
   }
 
   bails() {
-    return this.belongsToMany("Bail");
+    return this.belongsTo("Bail");
   }
 }
 

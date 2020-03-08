@@ -10,10 +10,6 @@ class Case extends bookshelf.Model{
         return true;
     }
 
-    defendant(){
-        return this.belongsTo('Defendant')
-    }
-
     bail(){
         return this.belongsTo('Bail')
     }

@@ -12,6 +12,10 @@ class Defendant extends bookshelf.Model {
   gender() {
     return this.hasOne("Gender",'id','gender_id');
   }
+
+  bails(){
+    return this.hasMany('Bail')
+  }
 }
 
 module.exports = bookshelf.model("Defendant", Defendant);
