@@ -9,6 +9,7 @@ exports.up = function(knex) {
       .integer("gender_id")
       .references("id")
       .inTable("genders")
+      .notNullable()
       .onDelete("CASCADE");
     table.timestamps(true, true);
   });

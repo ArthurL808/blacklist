@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-  return knex.schema.createTable("blacklistReasons", table => {
+  return knex.schema.createTable("bails_reasons", table => {
     table.increments();
     table
       .integer("reason_id")
@@ -16,5 +16,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schame.dropTable("blacklistReasons");
+  return knex.schame.dropTable("bails_reasons");
 };

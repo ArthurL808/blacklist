@@ -4,9 +4,10 @@ exports.up = function(knex) {
     table.string("caseNumber");
     table.decimal("bailAmount");
     table
-      .integer("defendant_id")
+      .integer("bail_id")
       .references("id")
-      .inTable("defendants")
+      .inTable("bails")
+      .notNullable()
       .onDelete("CASCADE");
     table.enu("severity", ["felony", "misdemeanor"]);
     table.enu("violence", ["violent", "non-violent"]);
