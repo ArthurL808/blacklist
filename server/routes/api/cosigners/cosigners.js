@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  return req.db.Defendant.fetchAll({ withRelated: ["gender", "bails"] })
+  return req.db.Cosigner.fetchAll({ withRelated: ["bails", "gender"] })
     .then(results => {
       return res.json(results);
     })
@@ -12,10 +12,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  return req.db.Defendant.where({ id: req.params.id })
-    .fetch({ withRelated: ["gender", "bails"] })
+  return req.db.Cosigner.where({ id: req.params.id })
+    .fetch({ withRelated: ["bails", "gender"] })
     .then(results => {
-      res.json(results);
+      return res.json(results);
     })
     .catch(err => {
       console.log(err);

@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   return req.db.Case.fetchAll({
-    withRelated: ["defendant"]
+    withRelated: ["bail"]
   })
     .then(results => {
       return res.json(results);
@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   return req.db.Case.where({ id: req.params.id })
-    .fetch({ withRelated: ["defendant"] })
+    .fetch({ withRelated: ["bail"] })
     .then(results => {
       return res.json(results);
     })

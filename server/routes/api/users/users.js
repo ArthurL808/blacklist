@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  return req.db.User.fetchAll()
+  return req.db.User.fetchAll({ withRelated: ["bails"] })
     .then(results => {
       return res.json(results);
     })
