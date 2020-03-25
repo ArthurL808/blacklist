@@ -4,7 +4,9 @@ import Styles from "./Header.module.scss";
 const Header = () => {
   return (
     <div className={Styles.header}>
-      <h1>Blacklist</h1>
+      <h1>
+        <a href="/">Blacklist</a>
+      </h1>
       <ul className={Styles.nav}>
         <li>
           <a href="/cosigners">Cosigners</a>
