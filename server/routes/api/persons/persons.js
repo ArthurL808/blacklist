@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  return req.db.BailReason.fetchAll({ withRelated: ["bail_id", "reason_id"] })
+  return req.db.Person.fetchAll({
+    withRelated: ["gender", 'defendantOn', 'cosignerOn','marks','blacklistedBy','cases','reasons']
+  })
     .then(results => {
       return res.json(results);
     })
@@ -12,10 +14,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  return req.db.BailReason.where({ id: req.params.id })
-    .fetch({ withRelated: ["bail_id", "reason_id"] })
+  return req.db.Person.where({ id: req.params.id })
+    .fetch({ withRelated: ["gender", "bails"] })
     .then(results => {
-      return res.json(results);
+      res.json(results);
     })
     .catch(err => {
       console.log(err);

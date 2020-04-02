@@ -27,12 +27,11 @@ app.use(decorator);
 
 // routes
 app.use("/api/users", api.users);
-app.use("/api/defendants", api.defendants);
+app.use("/api/persons", api.persons);
 app.use("/api/cases", api.cases);
 app.use("/api/bails", api.bails);
 app.use("/api/reasons", api.reasons);
-app.use("/api/bailsreasons", api.bailsReasons);
-app.use("/api/cosigners", api.cosigners);
+app.use("/api/deragatoryMarks", api.deragatoryMarks);
 app.use("/api/genders", api.genders);
 
 app.listen(PORT, () => {

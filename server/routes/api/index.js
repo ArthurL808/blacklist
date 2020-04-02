@@ -1,19 +1,17 @@
 const userRoutes = require("./users/users");
-const defendantRoutes = require("./defendants/defendants");
+const personsRoutes = require("./persons/persons");
 const casesRoutes = require("./cases/cases");
 const bailsRoutes = require("./bails/bails");
-const cosignersRoutes = require("./cosigners/cosigners");
-const bailsReasonsRoutes = require("./bailsReasons/bailsReasons");
+const deragatoryMarksRoutes = require("./deragatoryMarks/deragatoryMarks");
 const reasonsRoutes = require("./reasons/reasons");
 const gendersRoutes = require("./genders/genders");
 
 module.exports = {
   users: userRoutes,
-  defendants: defendantRoutes,
+  persons: personsRoutes,
   cases: casesRoutes,
   bails: bailsRoutes,
   genders: gendersRoutes,
-  cosigners: cosignersRoutes,
-  bailsReasons: bailsReasonsRoutes,
+  deragatoryMarks: deragatoryMarksRoutes,
   reasons: reasonsRoutes
 };

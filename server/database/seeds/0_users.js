@@ -29,31 +29,6 @@ exports.seed = function(knex) {
           name: "Monika",
           email: "mbrotherick4@booking.com",
           password: "9NXDzOz"
-        },
-        {
-          name: "Dolley",
-          email: "dwackett5@addthis.com",
-          password: "k4D1H2ap1jk"
-        },
-        {
-          name: "Gideon",
-          email: "gmccafferty6@buzzfeed.com",
-          password: "WsbbLmLp"
-        },
-        {
-          name: "Lorens",
-          email: "lwadwell7@cbsnews.com",
-          password: "BUfa77c"
-        },
-        {
-          name: "Ruthy",
-          email: "rmcdirmid8@topsy.com",
-          password: "yOTV8onzqzQQ"
-        },
-        {
-          name: "Eartha",
-          email: "eedinboro9@whitehouse.gov",
-          password: "g6KClKRq"
         }
       ]);
     });

@@ -11,8 +11,13 @@ exports.up = function(knex) {
     table
       .integer("defendant_id")
       .references("id")
-      .inTable("defendants")
+      .inTable("persons")
       .notNullable()
+      .onDelete("CASCADE");
+    table
+      .integer("cosigner_id")
+      .references("id")
+      .inTable("persons")
       .onDelete("CASCADE");
     table.timestamps(true, true);
   });

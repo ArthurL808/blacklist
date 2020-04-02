@@ -1,18 +1,13 @@
-const bookshelf = require('../bookshelf');
+const bookshelf = require("../bookshelf");
 
 class Reason extends bookshelf.Model {
+  get tableName() {
+    return "reasons";
+  }
 
-    get tableName(){
-        return 'reasons';
-    }
-
-    get hasTimestamps(){
-        return true;
-    }
-
-    bails(){
-        return this.belongsToMany('Bail', 'bails_reasons')
-    }
+  get hasTimestamps() {
+    return true;
+  }
 }
 
-module.exports = bookshelf.model("Reasons",Reason)
+module.exports = bookshelf.model("Reason", Reason);
