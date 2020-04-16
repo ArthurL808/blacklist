@@ -1,5 +1,6 @@
 export const LOAD_DEFENDANTS = "LOAD_DEFENDANTS";
 export const LOAD_COSIGNERS = "LOAD_COSIGNERS";
+export const LOAD_DERAGATORYMARKS = 'LOAD_DERAGATORYMARKS'
 
 export const loadDefendantsAsync = () => async dispatch => {
   fetch("/api/defendants")
@@ -34,25 +35,14 @@ export const loadCosignersAsync = () => async dispatch => {
 };
 
 export const loadHomeAsync = () => async dispatch => {
-  fetch("/api/cosigners")
+  fetch("/api/deragatorymarks")
     .then(response => {
       return response.json();
     })
-    .then(cosigners => {
+    .then(marks => {
       dispatch({
-        type: LOAD_COSIGNERS,
-        payload: cosigners
-      });
-
-      return fetch("/api/defendants");
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then(defendants => {
-      dispatch({
-        type: LOAD_DEFENDANTS,
-        payload: defendants
+        type: LOAD_DERAGATORYMARKS,
+        payload: marks
       });
     })
     .catch(err => {

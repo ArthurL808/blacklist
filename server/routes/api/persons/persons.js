@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   return req.db.Person.where({ id: req.params.id })
-    .fetch({ withRelated: ["gender", "bails"] })
+    .fetch({ withRelated: ["gender", 'defendantOn', 'cosignerOn','marks','blacklistedBy','cases','reasons'] })
     .then(results => {
       res.json(results);
     })

@@ -22,25 +22,23 @@ class Home extends Component {
         <h1>Home Component</h1>
         <div className={Styles.container}>
           <div className={Styles.cardContainer}>
-            <h1>Defendnats</h1>
-            {this.props.home.defendants.map(defendant => {
-              console.log(defendant)
+            <h1>Defendants</h1>
+            {this.props.home.map(marks => {
               return (
-                <div className={Styles.card} key={defendant.id}>
-                  <h4>{defendant.first_name}</h4>
-                  <p>{defendant.last_name}</p>
+                <div className={Styles.card} key={marks.id}>
+                  <h4>{marks.onPerson.first_name}</h4>
+                  <p>{marks.onPerson.last_name}</p>
                 </div>
               );
             })}
           </div>
           <div className={Styles.cardContainer}>
             <h1>Cosigners</h1>
-            {this.props.home.cosigners.map(cosigner => {
-              console.log(cosigner)
+            {this.props.home.map(marks => {
               return (
-                <div className={Styles.card} key={cosigner.id}>
-                  <h4>{cosigner.first_name}</h4>
-                  <p>{cosigner.last_name}</p>
+                <div className={Styles.card} key={marks.id}>
+                  <h4>{marks.onPerson.first_name}</h4>
+                  <p>{marks.onPerson.last_name}</p>
                 </div>
               );
             })}
@@ -52,8 +50,9 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return {
-    home: state
+    home: state.marks
   };
 };
 
