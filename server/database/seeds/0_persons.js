@@ -51,7 +51,7 @@ exports.seed = function(knex) {
           drug_user: true
         },
         {
-          first_name: "Ker",
+          first_name: "Fer",
           last_name: "Bollam",
           address: "40012 Nobel Lane",
           dob: "1999-07-11",

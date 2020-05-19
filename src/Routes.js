@@ -23,12 +23,12 @@ export const routes = [
     component: Defendants
   },
   {
-    path: "/riskassesment",
+    path: "/riskAssesment",
     exact: true,
     component: RiskAssesment
   },
   {
-    path: "/myblacklist",
+    path: "/mylist",
     exact: true,
     component: MyBlacklist
   }

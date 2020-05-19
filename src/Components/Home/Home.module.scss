@@ -1,14 +1,33 @@
-.container{
-    display: flex;
-    justify-content: space-evenly;
-    border: 1px black solid;
-
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  border: 1px black solid;
 }
 
-.cardContainer{
-    border: 1px black solid;
+.cardContainer {
+  border: 1px black solid;
+  display: inline-table;
 }
 
-.card{
-    border: solid 1px black;
+.card {
+  display: table-row;
 }
+
+// .search{
+//     text-align: center;
+//     margin: 5% 0;
+// }
+
+input{
+    width: 50%;
+    height: 25px;
+}
+
+p {
+//   border: solid 1px black;
+  display: table-cell;
+  padding: 10px;
+  margin: 5px;
+  text-decoration: none;
+}
+
