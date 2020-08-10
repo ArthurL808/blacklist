@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  return req.db.DeragatoryMarks.fetchAll({
-    withRelated: ["createdBy", "bail", "onPerson", "reason"]
+  return req.db.DeragatoryMark.fetchAll({
+    withRelated: ["createdBy", "onPerson", "reason"]
   })
     .then(results => {
       return res.json(results);
@@ -13,9 +13,9 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
-  return req.db.DeragatoryMarks.where({ id: req.params.id })
-    .fetch({ withRelated: ["createdBy", "bail", "onPerson", "reason"] })
+router.get("/onPerson/:id", (req, res) => {
+  return req.db.DeragatoryMark.where({ onPerson: req.params.id })
+    .fetchAll({ withRelated: ["createdBy", "reason"] })
     .then(results => {
       return res.json(results);
     })

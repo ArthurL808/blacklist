@@ -1,9 +1,10 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("persons", table => {
+exports.up = function (knex) {
+  return knex.schema.createTable("persons", (table) => {
     table.increments();
     table.string("first_name");
     table.string("last_name");
     table.string("address");
+    table.string("image_url");
     table.date("dob");
     table
       .integer("gender_id")
@@ -17,6 +18,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTable("persons");
 };

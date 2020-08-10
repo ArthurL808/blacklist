@@ -1,50 +1,54 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./Components/Home/";
-import Cosigners from "./Components/Cosigners";
-import Defendants from "./Components/Defendants";
+import Persons from "./Components/Persons";
 import RiskAssesment from "./Components/RiskAssesment";
 import MyBlacklist from "./Components/MyBlacklist";
+import Huntboard from "./Components/Huntboard";
+import NotFound from "./Components/NotFound";
 
 export const routes = [
   {
     path: "/",
     exact: true,
-    component: Home
+    component: Home,
   },
   {
-    path: "/cosigners",
+    path: "/deragatoryMarks/onPerson/:id",
     exact: true,
-    component: Cosigners
+    component: Persons,
   },
   {
-    path: "/defendants",
+    path: "/riskAssesment",
     exact: true,
-    component: Defendants
-  },
-  {
-    path: "/riskassesment",
-    exact: true,
-    component: RiskAssesment
+    component: RiskAssesment,
   },
   {
     path: "/myblacklist",
     exact: true,
-    component: MyBlacklist
-  }
+    component: MyBlacklist,
+  },
+  {
+    path: "/huntboard",
+    exact: true,
+    component: Huntboard,
+  },
 ];
 
 const Routes = () => {
   return (
     <>
-      {routes.map((route, i) => (
-        <Route
-          key={`global_routes_${i}`}
-          path={route.path}
-          exact={route.exact}
-          component={route.component}
-        />
-      ))}
+      <Switch>
+        {routes.map((route, i) => (
+          <Route
+            key={`global_routes_${i}`}
+            path={route.path}
+            exact={route.exact}
+            component={route.component}
+          />
+        ))}
+        <Route component={NotFound} />
+      </Switch>
     </>
   );
 };

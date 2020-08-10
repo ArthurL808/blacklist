@@ -7,28 +7,33 @@ exports.seed = function(knex) {
       return knex("users").insert([
         {
           name: "Arthur",
-          email: "artofbailhawaii@gmail.com",
-          password: "bigboss"
+          company_name: "Art of bail hawaii",
+          password: "bigboss",
+          email: 'artofbailhawaii@gmail.com'
         },
         {
-          name: "Wandie",
-          email: "wdomm1@omniture.com",
-          password: "o8W1nsyQdO6E"
+          name: "Scott",
+          company_name: "Aloha Bail bonds",
+          password: "o8W1nsyQdO6E",
+          email: 'alohabailbonds@newmail.com'
         },
         {
-          name: "Adah",
-          email: "avaugham2@ycombinator.com",
-          password: "6wk40n"
+          name: "Boi",
+          company_name: "24hr Bail bonds",
+          password: "6wk40n",
+          email: '24bail@bmail.com'
         },
         {
-          name: "Sallee",
-          email: "smcmurthy3@elpais.com",
-          password: "Scwli7Xv1oMk"
+          name: "Nick",
+          company_name: "A-1 Bail bonds",
+          password: "Scwli7Xv1oMk",
+          email: 'a1bail@newmail.com'
         },
         {
           name: "Monika",
-          email: "mbrotherick4@booking.com",
-          password: "9NXDzOz"
+          company_name: "Ali'i Bail bonds",
+          password: "9NXDzOz",
+          email: 'Aliibail@newmail.com'
         }
       ]);
     });

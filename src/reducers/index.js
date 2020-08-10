@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import cosignersReducer from "./cosignersReducer";
-import defendantsReducer from "./defendantsReducer";
+import personsReducer from "./personsReducer";
+import deragatoryMarksReducer from "./deragatoryMarksReducer";
+import huntsReducer from './huntsreducer'
 
 const reducer = combineReducers({
-  defendants: defendantsReducer,
-  cosigners: cosignersReducer
+  persons: personsReducer,
+  deragatoryMarks: deragatoryMarksReducer,
+  hunts: huntsReducer
 });
 
 export default reducer;
