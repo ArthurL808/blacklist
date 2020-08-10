@@ -14,30 +14,24 @@ class Person extends bookshelf.Model {
   }
 
   blacklistedBy() {
-    return this.belongsToMany("User").through("DeragatoryMarks",'onPerson');
-  }
-  defendantOn() {
-    return this.hasMany("Bail", "defendant_id", "id");
-  }
-
-  cosignerOn() {
-    return this.hasMany("Bail", "cosigner_id", "id");
+    return this.belongsToMany("User").through("DeragatoryMark",'onPerson');
   }
 
   reasons() {
     return this.belongsToMany("Reason").through(
-      "DeragatoryMarks",
+      "DeragatoryMark",
       "onPerson",
       "reason_id"
     );
   }
 
-  cases() {
-    return this.hasMany("Case", "defendant_id").through("Bail", "bail_id");
+  marks() {
+    return this.hasMany("DeragatoryMark",'onPerson','id');
   }
 
-  marks() {
-    return this.hasMany("DeragatoryMarks",'onPerson','id');
+  associates(){
+    
+    return this.hasMany('Associate')
   }
 }
 

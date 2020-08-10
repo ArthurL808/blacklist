@@ -1,53 +1,22 @@
-export const LOAD_DEFENDANTS = "LOAD_DEFENDANTS";
-export const LOAD_COSIGNERS = "LOAD_COSIGNERS";
+import axios from "axios";
+
 export const LOAD_DERAGATORYMARKS = "LOAD_DERAGATORYMARKS";
 
 export const PERSON_SEARCH = "PERSON_SEARCH";
 export const PERSON_SEARCH_FAIL = "PERSON_SEARCH_FAIL";
-export const ADD_ERROR = "ADD_ERROR";
-export const REMOVE_ERROR = "REMOVE_ERROR";
 
-// export const loadDefendantsAsync = () => async (dispatch) => {
-//   fetch("/api/defendants")
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((defendants) => {
-//       dispatch({
-//         type: LOAD_DEFENDANTS,
-//         payload: defendants,
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+export const LOAD_PERSON = "LOAD_PERSON";
+export const LOAD_PERSON_MARKS = "LOAD_PERSON_MARKS";
 
-// export const loadCosignersAsync = () => async (dispatch) => {
-//   fetch("/api/cosigners")
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((cosigners) => {
-//       dispatch({
-//         type: LOAD_COSIGNERS,
-//         payload: cosigners,
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
 
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
-  fetch("/api/deragatorymarks")
+  await axios
+    .get("/api/deragatorymarks")
     .then((response) => {
-      return response.json();
-    })
-    .then((marks) => {
       dispatch({
         type: LOAD_DERAGATORYMARKS,
-        payload: marks,
+        payload: response.data,
       });
     })
     .catch((err) => {
@@ -56,26 +25,64 @@ export const loadDeragatoryMarksAsync = () => async (dispatch) => {
 };
 
 export const searchPersonsAsync = (searchTerm) => async (dispatch) => {
-  fetch("/api/persons/search/" + searchTerm)
+  await axios
+    .get("/api/persons/search/" + searchTerm)
     .then((response) => {
-      console.log(response.status)
-      return response.json();
-    })
-    .then((person) => {
+      if (response.data.length <= 0) {
+        return dispatch({
+          type: PERSON_SEARCH_FAIL,
+          payload: `No Results for ${searchTerm}`,
+        });
+      }
       dispatch({
         type: PERSON_SEARCH,
-        payload: person,
+        payload: response.data,
       });
     })
     .catch((err) => {
       console.log(err);
       dispatch({
         type: PERSON_SEARCH_FAIL,
+        payload: err.message,
       });
+    });
+};
 
+export const loadPersonAsync = (id) => async (dispatch) => {
+  let requestPerson = axios.get(`/api/persons/${id}`);
+  let requestDeragatoryMarksOnPerson = axios.get(
+    `/api/deragatoryMarks/onPerson/${id}`
+  );
+  await axios
+    .all([requestPerson, requestDeragatoryMarksOnPerson])
+    .then(
+      axios.spread((...response) => {
+        let personResponse = response[0].data;
+        let deragatoryMarksOnPersonResponse = response[1].data;
+        dispatch({
+          type: LOAD_PERSON,
+          payload: {
+            individualPerson: personResponse,
+            marks: deragatoryMarksOnPersonResponse,
+          },
+        });
+      })
+    )
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const loadActiveHuntsAsync = () => async (dispatch) => {
+  await axios
+    .get("/api/hunts/active")
+    .then((response) => {
       dispatch({
-        type: ADD_ERROR,
-        error: err,
+        type: LOAD_ACTIVE_HUNTS,
+        payload: response.data,
       });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

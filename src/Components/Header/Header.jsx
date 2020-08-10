@@ -9,14 +9,11 @@ const Header = () => {
       </h1>
       <ul className={Styles.nav}>
         <li>
-          <a href="/cosigners">Cosigners</a>
+          <a href="/huntboard">Huntboard</a>
         </li>
-        <li>
-          <a href="/defendants">Defendants</a>
-        </li>
-        <li>
+        {/* <li>
           <a href="/riskassesment">Risk Assesment</a>
-        </li>
+        </li> */}
         <li>
           <a href="/myblacklist">My Blacklist</a>
         </li>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loadDeragatoryMarksAsync } from "../../actions";
-import Searchbar from '../Searchbar'
+import Searchbar from "../Searchbar";
 import Styles from "./Home.module.scss";
 import moment from "moment";
 
@@ -13,7 +13,6 @@ class Home extends Component {
     };
   }
 
-
   componentDidMount() {
     this.props.loadDeragatoryMarks();
   }
@@ -21,15 +20,15 @@ class Home extends Component {
   render() {
     return (
       <>
-      <Searchbar persons={this.props.persons}/>
-        {this.props.persons.length > 0 ? (
+        <Searchbar error={this.props.personsSearch.error}/>
+        
+        {this.props.personsSearch.persons.length > 0 ? (
           <div>
-            {this.props.persons.map((person) => {
+            {this.props.personsSearch.persons.map((person) => {
               return (
                 <div key={person.id}>
-                  <a href={`/perons/${person.id}`}>
-                    <p>{person.first_name}</p>
-                    <p>{person.last_name}</p>
+                  <a href={`/deragatoryMarks/onPerson/${person.id}`}>
+                    <p>{person.last_name}, {person.first_name}</p>
                     {person.reasons.map((reason) => {
                       return <p key={reason.id}>{reason.reason}</p>;
                     })}
@@ -39,7 +38,6 @@ class Home extends Component {
             })}
           </div>
         ) : (
-          
           <div className={Styles.container}>
             <div className={Styles.cardContainer}>
               <h3>Defendants</h3>
@@ -48,7 +46,7 @@ class Home extends Component {
                 .map((defenantMark) => {
                   return (
                     <div className={Styles.card} key={defenantMark.id}>
-                      <a href={`/persons/${defenantMark.onPerson.id}`}>
+                      <a href={`/deragatoryMarks/onPerson/${defenantMark.onPerson.id}`}>
                         <p>First name: {defenantMark.onPerson.first_name}</p>
                         <p>Last name: {defenantMark.onPerson.last_name}</p>
                         <p>Deragatory Mark: {defenantMark.reason.reason}</p>
@@ -69,7 +67,7 @@ class Home extends Component {
                 .map((cosignerMark) => {
                   return (
                     <div className={Styles.card} key={cosignerMark.id}>
-                      <a href={`/persons/${cosignerMark.onPerson.id}`}>
+                      <a href={`/deragatoryMarks/onPerson/${cosignerMark.onPerson.id}`}>
                         <p>First name: {cosignerMark.onPerson.first_name}</p>
                         <p>Last name: {cosignerMark.onPerson.last_name}</p>
                         <p>Deragatory Mark: {cosignerMark.reason.reason}</p>
@@ -91,10 +89,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  console.log(state)
   return {
-    deragatoryMarks: state.marks,
-    persons: state.persons,
+    deragatoryMarks: state.deragatoryMarks,
+    personsSearch: state.persons.personsSearch,
   };
 };
 

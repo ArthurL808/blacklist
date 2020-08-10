@@ -8,9 +8,6 @@ class User extends bookshelf.Model {
     return true;
   }
 
-  bails() {
-    return this.hasMany("Bail");
-  }
 }
 
 module.exports = bookshelf.model("User", User);

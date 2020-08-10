@@ -3,15 +3,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   return req.db.Person.fetchAll({
-    withRelated: [
-      "gender",
-      "defendantOn",
-      "cosignerOn",
-      "marks",
-      "blacklistedBy",
-      "cases",
-      "reasons",
-    ],
+    withRelated: ["gender", "marks", "blacklistedBy", "reasons"],
   })
     .then((results) => {
       return res.json(results);
@@ -22,50 +14,39 @@ router.get("/", (req, res) => {
 });
 
 router.get("/search/:searchTerm", (req, res) => {
-  return req.db.Person.where("first_name", "LIKE", `${req.params.searchTerm}%`)
+  return req.db.Person.query(
+    "where",
+    "first_name",
+    "ILIKE",
+    `%${req.params.searchTerm}%`,
+    "orWhere",
+    "last_name",
+    "ILIKE",
+    `%${req.params.searchTerm}%`
+  )
     .fetchAll({
-      withRelated: [
-        "gender",
-        "defendantOn",
-        "cosignerOn",
-        "marks",
-        "blacklistedBy",
-        "cases",
-        "reasons",
-      ],
+      withRelated: ["gender", "marks", "blacklistedBy", "reasons"],
     })
-    .then((persons) => {
-      let results = persons.toJSON()
-      if(results.length <= 0){
-        return res.status(400).send('NO RESULTS')
-      }
-      res.send(results);
+    .then((results) => {
+      return res.json(results);
     })
     .catch((err) => {
-      console.log(err);
-      res.status(500)
-      res.send("Server error")
+      res.status(500);
+      res.send(err);
     });
 });
 
 router.get("/:id", (req, res) => {
   return req.db.Person.where({ id: req.params.id })
     .fetch({
-      withRelated: [
-        "gender",
-        "defendantOn",
-        "cosignerOn",
-        "marks",
-        "blacklistedBy",
-        "cases",
-        "reasons",
-      ],
+      withRelated: ["gender", "associates","marks"],
     })
     .then((results) => {
       res.json(results);
     })
     .catch((err) => {
-      console.log(err);
+      res.status(500).send(err);
+      console.log(err)
     });
 });
 

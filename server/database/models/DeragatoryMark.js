@@ -1,6 +1,6 @@
 const bookshelf = require("../bookshelf");
 
-class DeragatoryMarks extends bookshelf.Model {
+class DeragatoryMark extends bookshelf.Model {
   get tableName() {
     return "deragatoryMarks";
   }
@@ -16,13 +16,9 @@ class DeragatoryMarks extends bookshelf.Model {
     return this.belongsTo("User");
   }
 
-  bail() {
-    return this.belongsTo("Bail");
-  }
-
   onPerson() {
     return this.belongsTo("Person", "onPerson", "id");
   }
 }
 
-module.exports = bookshelf.model("DeragatoryMarks", DeragatoryMarks);
+module.exports = bookshelf.model("DeragatoryMark", DeragatoryMark);

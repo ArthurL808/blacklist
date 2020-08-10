@@ -7,11 +7,6 @@ exports.up = function(knex) {
       .inTable("reasons")
       .onDelete("CASCADE");
     table
-      .integer("bail_id")
-      .references("id")
-      .inTable("bails")
-      .onDelete("CASCADE");
-    table
       .integer("user_id")
       .references("id")
       .inTable("users")
@@ -28,5 +23,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schame.dropTable("deragatoryMarks");
+  return knex.schema.dropTable("deragatoryMarks");
 };

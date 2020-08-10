@@ -28,11 +28,15 @@ app.use(decorator);
 // routes
 app.use("/api/users", api.users);
 app.use("/api/persons", api.persons);
-app.use("/api/cases", api.cases);
-app.use("/api/bails", api.bails);
-app.use("/api/reasons", api.reasons);
 app.use("/api/deragatoryMarks", api.deragatoryMarks);
 app.use("/api/genders", api.genders);
+app.use("/api/hunts", api.hunts);
+app.all("*", (req, res, next) => {
+  res.status(404).json({
+    status: "fail",
+    message: `Can't seem to find ${req.originalUrl}`,
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server stated on port: ${PORT}`);
