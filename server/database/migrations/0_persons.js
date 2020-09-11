@@ -12,8 +12,6 @@ exports.up = function (knex) {
       .inTable("genders")
       .notNullable()
       .onDelete("CASCADE");
-    table.boolean("mental_health_issues");
-    table.boolean("drug_user");
     table.timestamps(true, true);
   });
 };

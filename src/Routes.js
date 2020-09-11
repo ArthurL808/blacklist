@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./Components/Home/";
-import Persons from "./Components/Persons";
+import IndividualPerson from "./Components/Persons/individualPerson";
 import RiskAssesment from "./Components/RiskAssesment";
 import MyBlacklist from "./Components/MyBlacklist";
 import Huntboard from "./Components/Huntboard";
@@ -16,7 +16,7 @@ export const routes = [
   {
     path: "/deragatoryMarks/onPerson/:id",
     exact: true,
-    component: Persons,
+    component: IndividualPerson,
   },
   {
     path: "/riskAssesment",

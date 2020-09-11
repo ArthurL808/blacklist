@@ -26,4 +26,8 @@ router.get("/active", (req, res) => {
     });
 });
 
+// router.post('/', (req,res)=>{
+//   return req.db.Hunt.forge({})
+// })
+
 module.exports = router;

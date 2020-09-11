@@ -12,8 +12,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "2016-03-14",
           gender_id: 1,
-          mental_health_issues: false,
-          drug_user: false
         },
         {
           first_name: "Ina",
@@ -22,8 +20,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "2013-09-11",
           gender_id: 3,
-          mental_health_issues: true,
-          drug_user: true
         },
         {
           first_name: "Marena",
@@ -32,8 +28,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "1993-01-09",
           gender_id: 1,
-          mental_health_issues: true,
-          drug_user: false
         },
         {
           first_name: "Leora",
@@ -42,8 +36,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "2004-05-07",
           gender_id: 3,
-          mental_health_issues: true,
-          drug_user: true
         },
         {
           first_name: "Portia",
@@ -52,8 +44,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "1994-02-24",
           gender_id: 1,
-          mental_health_issues: false,
-          drug_user: true
         },
         {
           first_name: "Fer",
@@ -62,8 +52,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "1999-07-11",
           gender_id: 1,
-          mental_health_issues: true,
-          drug_user: false
         },
         {
           first_name: "Bondie",
@@ -72,8 +60,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "2019-02-17",
           gender_id: 3,
-          mental_health_issues: true,
-          drug_user: false
         },
         {
           first_name: "Ezechiel",
@@ -82,8 +68,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "1992-05-14",
           gender_id: 3,
-          mental_health_issues: false,
-          drug_user: false
         },
         {
           first_name: "Melba",
@@ -92,8 +76,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "2017-10-18",
           gender_id: 3,
-          mental_health_issues: false,
-          drug_user: false
         },
         {
           first_name: "Peterus",
@@ -102,8 +84,6 @@ exports.seed = function(knex) {
           image_url:'https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png',
           dob: "1987-12-28",
           gender_id: 1,
-          mental_health_issues: false,
-          drug_user: false
         }
       ]);
     });

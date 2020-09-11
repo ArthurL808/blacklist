@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Styles from "./Persons.module.scss";
+import Styles from "./IndividualPerson.module.scss";
 import { connect } from "react-redux";
-import { loadPersonAsync } from "../../actions";
+import { loadPersonAsync } from "../../../actions";
 import moment from "moment";
-const Persons = ({ ...props }) => {
+const IndividualPerson = ({ ...props }) => {
   const { match, loadPerson, person } = props;
   const id = parseInt(match.params.id);
 
@@ -23,7 +23,6 @@ const Persons = ({ ...props }) => {
           <p>
             DoB: {moment(person.dob).format('MMM DD, YYYY')} Age: {moment(person.dob).toNow(true)}
           </p>
-          <p>Drug use: {String(person.drug_user)}</p>
           <div>
             <h4>Associates</h4>
             {person.associates.map((associate)=>{
@@ -68,4 +67,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Persons);
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualPerson);
