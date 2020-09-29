@@ -10,6 +10,8 @@ export const LOAD_PERSON_MARKS = "LOAD_PERSON_MARKS";
 
 export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
 
+export const ADD_ADDRESS = "ADD_ADDRESS";
+
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
   await axios
     .get("/api/deragatorymarks")
@@ -86,3 +88,18 @@ export const loadActiveHuntsAsync = () => async (dispatch) => {
       console.log(err);
     });
 };
+
+// export const addAddressAsync = (address) => async (dispatch) => {
+//   await axios
+//     .post("api/addresses", address)
+//     .then((res) => {
+//       dispatch({
+//         type: ADD_ADDRESS,
+//         payload: res
+//       })
+//       console.log(res);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };

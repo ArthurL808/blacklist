@@ -6,6 +6,7 @@ import RiskAssesment from "./Components/RiskAssesment";
 import MyBlacklist from "./Components/MyBlacklist";
 import Huntboard from "./Components/Huntboard";
 import NotFound from "./Components/NotFound";
+import NewPerson from "./Components/Persons/NewPerson";
 
 export const routes = [
   {
@@ -32,6 +33,11 @@ export const routes = [
     path: "/huntboard",
     exact: true,
     component: Huntboard,
+  },
+  {
+    path: "/newPerson",
+    exact: true,
+    component: NewPerson,
   },
 ];
 

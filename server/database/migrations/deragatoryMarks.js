@@ -12,12 +12,12 @@ exports.up = function(knex) {
       .inTable("users")
       .onDelete("CASCADE");
     table
-      .integer("onPerson")
+      .integer("on_person")
       .references("id")
       .inTable("persons")
       .notNullable()
       .onDelete("CASCADE");
-    table.enu("personRole", ["defendant", "cosigner"]);
+    table.enu("person_role", ["defendant", "cosigner"]);
     table.timestamps(true, true);
   });
 };

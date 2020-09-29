@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable("hunts", (table) => {
     table.increments();
-    table.boolean('active')
+    table.boolean("active");
     table
       .integer("user_id")
       .references("id")
@@ -12,6 +12,8 @@ exports.up = function (knex) {
       .references("id")
       .inTable("persons")
       .onDelete("CASCADE");
+    table.boolean("known_to_carry_weapon");
+    table.boolean("charged_with_violent_crime");
   });
 };
 

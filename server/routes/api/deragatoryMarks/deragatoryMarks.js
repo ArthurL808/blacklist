@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/onPerson/:id", (req, res) => {
-  return req.db.DeragatoryMark.where({ onPerson: req.params.id })
+  return req.db.DeragatoryMark.where({ on_person: req.params.id })
     .fetchAll({ withRelated: ["createdBy", "reason"] })
     .then((results) => {
       return res.json(results);
@@ -28,8 +28,8 @@ router.post("/", (req, res) => {
   return req.db.DeragatoryMark.forge({
     user_id: req.body.user_id,
     reason_id: req.body.reason_id,
-    onPerson: req.body.person_id,
-    personRole: req.body.personRole,
+    on_person: req.body.person_id,
+    person_role: req.body.person_role,
   })
     .save()
     .then((results) => {
@@ -46,7 +46,7 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   return req.db.DeragatoryMark.forge({ id: req.params.id })
-    .save({ reason_id: req.body.reason_id, personRole: req.body.personRole })
+    .save({ reason_id: req.body.reason_id, person_role: req.body.person_role })
     .then((results) => {
       res.json(results);
     })

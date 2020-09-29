@@ -57,7 +57,6 @@ class Huntboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     hunts: state.hunts,
   };

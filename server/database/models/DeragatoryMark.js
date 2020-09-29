@@ -17,7 +17,7 @@ class DeragatoryMark extends bookshelf.Model {
   }
 
   onPerson() {
-    return this.belongsTo("Person", "onPerson", "id");
+    return this.belongsTo("Person", "on_person", "id");
   }
 }
 

@@ -3,9 +3,10 @@ exports.up = function (knex) {
     table.increments();
     table.string("first_name");
     table.string("last_name");
-    table.string("address");
     table.string("image_url");
     table.date("dob");
+    table.decimal('height');
+    table.integer('weight')
     table
       .integer("gender_id")
       .references("id")

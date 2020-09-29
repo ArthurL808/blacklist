@@ -3,6 +3,8 @@ import Styles from "./IndividualPerson.module.scss";
 import { connect } from "react-redux";
 import { loadPersonAsync } from "../../../actions";
 import moment from "moment";
+
+
 const IndividualPerson = ({ ...props }) => {
   const { match, loadPerson, person } = props;
   const id = parseInt(match.params.id);
@@ -18,7 +20,14 @@ const IndividualPerson = ({ ...props }) => {
           <h3>
             {person.last_name}, {person.first_name}
           </h3>
-          <p>Address: {person.address}</p>
+          <p>Addresses:</p>
+          {person.addresses.map((address)=>{
+            return (
+              <div key={address.id}>
+                {address.street_address}, {address.zipcode} Apt#: {address.apt_number}
+              </div>
+            )
+          })}
           <p>Gender: {person.gender.gender}</p>
           <p>
             DoB: {moment(person.dob).format('MMM DD, YYYY')} Age: {moment(person.dob).toNow(true)}

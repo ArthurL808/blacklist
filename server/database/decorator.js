@@ -5,6 +5,7 @@ const Gender = require("./models/Gender");
 const DeragatoryMark = require("./models/DeragatoryMark");
 const Hunt = require("./models/Hunt");
 const Associate = require("./models/Associate");
+const Address = require('./models/Address')
 
 module.exports = function (req, res, next) {
   req.db = {
@@ -15,6 +16,7 @@ module.exports = function (req, res, next) {
     DeragatoryMark,
     Hunt,
     Associate,
+    Address
   };
   next();
 };

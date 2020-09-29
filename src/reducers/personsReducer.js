@@ -14,7 +14,7 @@ const initialState = {
     id: 0,
     first_name: "",
     last_name: "",
-    address: "",
+    addresses: [],
     dob: "",
     gender_id: 0,
     mental_health_issues: false,

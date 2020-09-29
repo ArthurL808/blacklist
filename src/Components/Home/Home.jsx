@@ -42,7 +42,7 @@ class Home extends Component {
             <div className={Styles.cardContainer}>
               <h3>Defendants</h3>
               {this.props.deragatoryMarks
-                .filter((marks) => marks.personRole.includes("defendant"))
+                .filter((marks) => marks.person_role.includes("defendant"))
                 .map((defenantMark) => {
                   return (
                     <div className={Styles.card} key={defenantMark.id}>
@@ -63,7 +63,7 @@ class Home extends Component {
             <div className={Styles.cardContainer}>
               <h3>Cosigners</h3>
               {this.props.deragatoryMarks
-                .filter((marks) => marks.personRole.includes("cosigner"))
+                .filter((marks) => marks.person_role.includes("cosigner"))
                 .map((cosignerMark) => {
                   return (
                     <div className={Styles.card} key={cosignerMark.id}>

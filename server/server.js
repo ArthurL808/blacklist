@@ -31,6 +31,7 @@ app.use("/api/persons", api.persons);
 app.use("/api/deragatoryMarks", api.deragatoryMarks);
 app.use("/api/genders", api.genders);
 app.use("/api/hunts", api.hunts);
+app.use('/api/addresses',api.addresses)
 app.all("*", (req, res, next) => {
   res.status(404).json({
     status: "fail",
