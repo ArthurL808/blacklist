@@ -1,14 +1,32 @@
 import React, { useState } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
+import {addPersonAsync} from "../../actions";
 
-const AddressAutocomplete = () => {
+const AddressAutocomplete = ({ person }) => {
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState(null);
   const [aptNumber, setAptNumber] = useState("");
 
   const handleSelect = async (value) => {
-    console.log(value);
     setAddress(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    function getFormData(object) {
+      const formData = new FormData();
+      Object.keys(object).forEach((key) => formData.append(key, object[key]));
+
+      return formData;
+    }
+    const data = getFormData(person);
+    const fullAddress = {
+      address: address,
+      zipcode: zipcode,
+      aptNumber: aptNumber
+    }
+    addPersonAsync(data,fullAddress);
   };
 
   const handleChange = (event) => {
@@ -25,7 +43,7 @@ const AddressAutocomplete = () => {
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <PlacesAutocomplete
         value={address}
         onChange={setAddress}
@@ -64,7 +82,8 @@ const AddressAutocomplete = () => {
         onChange={handleChange}
         name="zipcode"
       />
-    </div>
+      <input type="submit" value="Submit" />
+    </form>
   );
 };
 

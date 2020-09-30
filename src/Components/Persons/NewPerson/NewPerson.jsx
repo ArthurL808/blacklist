@@ -16,7 +16,6 @@ class NewPerson extends Component {
 
     this.handleChange = this.handleChange.bind(this);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(event) {
     switch (event.target.name) {
@@ -49,23 +48,12 @@ class NewPerson extends Component {
     }
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log(this.state);
 
-    function getFormData(object) {
-      const formData = new FormData();
-      Object.keys(object).forEach((key) => formData.append(key, object[key]));
-
-      return formData;
-    }
-    const data = getFormData(this.state);
-  }
 
   render() {
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <div>
             <label>Name</label>
             <input
@@ -138,11 +126,9 @@ class NewPerson extends Component {
           </div>
 
           <input type="file" name="image" onChange={this.handleChange} />
-
-          <input type="submit" value="Submit" />
         </form>
 
-        {/* <AddressAutocomplete /> */}
+        <AddressAutocomplete person={this.state} />
       </>
     );
   }

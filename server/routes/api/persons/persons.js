@@ -5,7 +5,7 @@ const singleUpload = upload.single("image");
 
 router.get("/", (req, res) => {
   return req.db.Person.fetchAll({
-    withRelated: ["gender", "marks", "blacklistedBy", "reasons","addresses"],
+    withRelated: ["gender", "marks", "blacklistedBy", "reasons", "addresses"],
   })
     .then((results) => {
       return res.json(results);
@@ -24,7 +24,7 @@ router.get("/search/:searchTerm", (req, res) => {
     );
   })
     .fetchAll({
-      withRelated: ["gender", "marks", "blacklistedBy", "reasons",'addresses'],
+      withRelated: ["gender", "marks", "blacklistedBy", "reasons", "addresses"],
     })
     .then((results) => {
       return res.json(results);
@@ -39,7 +39,7 @@ router.get("/search/:searchTerm", (req, res) => {
 router.get("/:id", (req, res) => {
   return req.db.Person.where({ id: req.params.id })
     .fetch({
-      withRelated: ["gender", "associates", "marks",'addresses'],
+      withRelated: ["gender", "associates", "marks", "addresses"],
     })
     .then((results) => {
       res.json(results);
@@ -57,7 +57,7 @@ router.post("/", singleUpload, (req, res) => {
     dob: req.body.dob,
     height: req.body.height,
     weight: req.body.weight,
-    gender_id: req.body.gender_id
+    gender_id: req.body.gender_id,
   };
   if (!req.file) {
     newPerson.image_url =
@@ -67,8 +67,8 @@ router.post("/", singleUpload, (req, res) => {
   }
   return req.db.Person.forge(newPerson)
     .save()
-    .then(() => {
-      res.status(200).send("Person Added!");
+    .then((results) => {
+      res.json(results);
     })
     .catch((err) => {
       console.log(err);
@@ -84,7 +84,7 @@ router.put("/:id", singleUpload, (req, res) => {
     dob: req.body.dob,
     height: req.body.height,
     weight: req.body.weight,
-    gender_id: req.body.gender_id
+    gender_id: req.body.gender_id,
   };
   if (req.file) {
     newPerson.image_url = req.file.location;

@@ -11,6 +11,7 @@ export const LOAD_PERSON_MARKS = "LOAD_PERSON_MARKS";
 export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
 
 export const ADD_ADDRESS = "ADD_ADDRESS";
+export const ADD_PERSON = "ADD_PERSON";
 
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
   await axios
@@ -89,17 +90,29 @@ export const loadActiveHuntsAsync = () => async (dispatch) => {
     });
 };
 
-// export const addAddressAsync = (address) => async (dispatch) => {
-//   await axios
-//     .post("api/addresses", address)
-//     .then((res) => {
-//       dispatch({
-//         type: ADD_ADDRESS,
-//         payload: res
-//       })
-//       console.log(res);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+export const addPersonAsync = (data,fullAddress) => {
+  axios
+    .post("/api/persons", data)
+    .then((res) => {
+      return res.data
+    }).then((res)=> {
+      fullAddress.person_id = res.id
+      addAddressAsync(fullAddress)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
+export const addAddressAsync = (fullAddress,id) => {
+  console.log('hit');
+  axios
+    .post("api/addresses", fullAddress)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
