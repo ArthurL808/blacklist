@@ -90,25 +90,36 @@ export const loadActiveHuntsAsync = () => async (dispatch) => {
     });
 };
 
-export const addPersonAsync = (data,fullAddress) => {
+export const addPersonAsync = (data, fullAddress,deragatoryMark) => {
   axios
     .post("/api/persons", data)
     .then((res) => {
-      return res.data
-    }).then((res)=> {
-      fullAddress.person_id = res.id
-      addAddressAsync(fullAddress)
+      return res.data;
+    })
+    .then((res) => {
+      fullAddress.person_id = res.id;
+      deragatoryMark.on_person = res.id;
+      addAddressAsync(fullAddress);
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-
-export const addAddressAsync = (fullAddress,id) => {
-  console.log('hit');
+export const addAddressAsync = (fullAddress) => {
   axios
     .post("api/addresses", fullAddress)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const addDeragatoryMarkAsync = (deragatoryMark) => {
+  axios
+    .post("api/deragatoryMark", deragatoryMark)
     .then((res) => {
       console.log(res);
     })

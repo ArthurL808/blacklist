@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
-import {addPersonAsync} from "../../actions";
+import { addPersonAsync } from "../../actions";
 
 const AddressAutocomplete = ({ person }) => {
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState(null);
   const [aptNumber, setAptNumber] = useState("");
+  const [reason, setReason] = useState(null);
+  const [personRole, setPersonRole] = useState("");
 
   const handleSelect = async (value) => {
     setAddress(value);
@@ -24,22 +26,13 @@ const AddressAutocomplete = ({ person }) => {
     const fullAddress = {
       address: address,
       zipcode: zipcode,
-      aptNumber: aptNumber
+      aptNumber: aptNumber,
+    };
+    const deragatoryMark = {
+      reason_id: reason,
+      person_role: personRole
     }
-    addPersonAsync(data,fullAddress);
-  };
-
-  const handleChange = (event) => {
-    switch (event.target.name) {
-      case "zipcode":
-        setZipcode(event.target.value);
-        break;
-      case "aptNumber":
-        setAptNumber(event.target.value);
-        break;
-      default:
-        break;
-    }
+    addPersonAsync(data, fullAddress,deragatoryMark);
   };
 
   return (
@@ -73,15 +66,33 @@ const AddressAutocomplete = ({ person }) => {
         }}
       </PlacesAutocomplete>
       <label>Apt#</label>
-      <input type="text" onChange={handleChange} name="aptNumber" />
+      <input type="text" onChange={setAptNumber} name="aptNumber" />
       <label>Zipcode</label>
       <input
         type="number"
         min="0"
         max="99999"
-        onChange={handleChange}
+        onChange={setZipcode}
         name="zipcode"
       />
+
+      <H2>Deragatory Marks</H2>
+      <select name="reason_id" onChange={setReason}>
+        <option value={1}>Non-Payment</option>
+        <option value={2}>Fraud</option>
+        <option value={3}>Skipped Bail</option>
+        <option value={4}>No Communication</option>
+        <option value={5}>Aggressive</option>
+        <option value={6}>Hidding Fugitive</option>
+        <option value={7}>Non-Compliance W/Terms</option>
+        <option value={8}>Other</option>
+      </select>
+
+      <select onChange={setPersonRole} name="personRole">
+        <option value="defendant">Defendant</option>
+        <option value="cosigner">Cosigner</option>
+      </select>
+
       <input type="submit" value="Submit" />
     </form>
   );
