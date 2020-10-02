@@ -36,6 +36,8 @@ const AddressAutocomplete = ({ person }) => {
   };
 
   return (
+    <>
+    <h2>Address</h2>
     <form onSubmit={handleSubmit}>
       <PlacesAutocomplete
         value={address}
@@ -76,7 +78,7 @@ const AddressAutocomplete = ({ person }) => {
         name="zipcode"
       />
 
-      <H2>Deragatory Marks</H2>
+        <h2>Deragatory Marks</h2>
       <select name="reason_id" onChange={setReason}>
         <option value={1}>Non-Payment</option>
         <option value={2}>Fraud</option>
@@ -95,6 +97,7 @@ const AddressAutocomplete = ({ person }) => {
 
       <input type="submit" value="Submit" />
     </form>
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ exports.seed = function(knex) {
         {
           name: "Arthur",
           company_name: "Art of bail hawaii",
-          password: "bigboss",
+          password:"$2a$12$B3OHmkCfPpDtTh86w3Mc9.SE5pxlXRdSSNu/nHUxzszroKeivsnVu" ,
           email: 'artofbailhawaii@gmail.com'
         },
         {
