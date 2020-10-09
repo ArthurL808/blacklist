@@ -67,7 +67,6 @@ router.post("/register", (req, res) => {
             })
                 .save()
                 .then(user => {
-                    console.log(user);
                     //change redirect later to login page
                     return res.redirect("/api/users");
                 })

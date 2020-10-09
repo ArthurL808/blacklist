@@ -13,6 +13,8 @@ export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
 export const ADD_ADDRESS = "ADD_ADDRESS";
 export const ADD_PERSON = "ADD_PERSON";
 
+export const LOGIN = "LOGIN";
+
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
   await axios
     .get("/api/deragatorymarks")
@@ -90,7 +92,7 @@ export const loadActiveHuntsAsync = () => async (dispatch) => {
     });
 };
 
-export const addPersonAsync = (data, fullAddress,deragatoryMark) => {
+export const addPersonAsync = (data, fullAddress, deragatoryMark) => {
   axios
     .post("/api/persons", data)
     .then((res) => {
@@ -108,7 +110,7 @@ export const addPersonAsync = (data, fullAddress,deragatoryMark) => {
 
 export const addAddressAsync = (fullAddress) => {
   axios
-    .post("api/addresses", fullAddress)
+    .post("/api/addresses", fullAddress)
     .then((res) => {
       console.log(res);
     })
@@ -119,9 +121,20 @@ export const addAddressAsync = (fullAddress) => {
 
 export const addDeragatoryMarkAsync = (deragatoryMark) => {
   axios
-    .post("api/deragatoryMark", deragatoryMark)
+    .post("/api/deragatoryMark", deragatoryMark)
     .then((res) => {
       console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const loginAction = (credentails) => {
+  axios
+    .post("/api/auth/login", credentails)
+    .then((res) => {
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);

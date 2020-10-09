@@ -7,6 +7,7 @@ import MyBlacklist from "./Components/MyBlacklist";
 import Huntboard from "./Components/Huntboard";
 import NotFound from "./Components/NotFound";
 import NewPerson from "./Components/Persons/NewPerson";
+import LoginForm from './Components/LoginForm'
 
 export const routes = [
   {
@@ -38,6 +39,11 @@ export const routes = [
     path: "/newPerson",
     exact: true,
     component: NewPerson,
+  },
+  {
+    path: "/login",
+    exact: true,
+    component: LoginForm,
   },
 ];
 
