@@ -20,15 +20,17 @@ class Home extends Component {
   render() {
     return (
       <>
-        <Searchbar error={this.props.personsSearch.error}/>
-        
+        <Searchbar error={this.props.personsSearch.error} />
+
         {this.props.personsSearch.persons.length > 0 ? (
           <div>
             {this.props.personsSearch.persons.map((person) => {
               return (
                 <div key={person.id}>
                   <a href={`/deragatoryMarks/onPerson/${person.id}`}>
-                    <p>{person.last_name}, {person.first_name}</p>
+                    <p>
+                      {person.last_name}, {person.first_name}
+                    </p>
                     {person.reasons.map((reason) => {
                       return <p key={reason.id}>{reason.reason}</p>;
                     })}
@@ -46,7 +48,9 @@ class Home extends Component {
                 .map((defenantMark) => {
                   return (
                     <div className={Styles.card} key={defenantMark.id}>
-                      <a href={`/deragatoryMarks/onPerson/${defenantMark.onPerson.id}`}>
+                      <a
+                        href={`/deragatoryMarks/onPerson/${defenantMark.onPerson.id}`}
+                      >
                         <p>First name: {defenantMark.onPerson.first_name}</p>
                         <p>Last name: {defenantMark.onPerson.last_name}</p>
                         <p>Deragatory Mark: {defenantMark.reason.reason}</p>
@@ -67,7 +71,9 @@ class Home extends Component {
                 .map((cosignerMark) => {
                   return (
                     <div className={Styles.card} key={cosignerMark.id}>
-                      <a href={`/deragatoryMarks/onPerson/${cosignerMark.onPerson.id}`}>
+                      <a
+                        href={`/deragatoryMarks/onPerson/${cosignerMark.onPerson.id}`}
+                      >
                         <p>First name: {cosignerMark.onPerson.first_name}</p>
                         <p>Last name: {cosignerMark.onPerson.last_name}</p>
                         <p>Deragatory Mark: {cosignerMark.reason.reason}</p>
@@ -89,7 +95,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
+  console.log(state);
   return {
     deragatoryMarks: state.deragatoryMarks,
     personsSearch: state.persons.personsSearch,

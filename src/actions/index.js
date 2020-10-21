@@ -14,6 +14,7 @@ export const ADD_ADDRESS = "ADD_ADDRESS";
 export const ADD_PERSON = "ADD_PERSON";
 
 export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
   await axios
@@ -130,11 +131,28 @@ export const addDeragatoryMarkAsync = (deragatoryMark) => {
     });
 };
 
-export const loginAction = (credentails) => {
-  axios
+export const loginAction = (credentails) => async (dispatch) => {
+  await axios
     .post("/api/auth/login", credentails)
     .then((res) => {
-      console.log(res.data);
+      return dispatch({
+        type: LOGIN,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const logoutAction = () => async (dispatch) => {
+  await axios
+    .post("/api/auth/logout")
+    .then((res) => {
+      return dispatch({
+        type: LOGOUT,
+        payload: res.data,
+      });
     })
     .catch((err) => {
       console.log(err);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Components/Home/";
 import IndividualPerson from "./Components/Persons/individualPerson";
 import RiskAssesment from "./Components/RiskAssesment";
@@ -7,7 +7,7 @@ import MyBlacklist from "./Components/MyBlacklist";
 import Huntboard from "./Components/Huntboard";
 import NotFound from "./Components/NotFound";
 import NewPerson from "./Components/Persons/NewPerson";
-import LoginForm from './Components/LoginForm'
+import LoginForm from "./Components/LoginForm";
 
 export const routes = [
   {
@@ -46,7 +46,18 @@ export const routes = [
     component: LoginForm,
   },
 ];
-
+// const PrivateRoutes = ({ component: Component, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={(props) =>
+//       auth.isAuthenticated === true ? (
+//         <Component {...props} />
+//       ) : (
+//         <Redirect to="/login" />
+//       )
+//     }
+//   />
+// );
 const Routes = () => {
   return (
     <>

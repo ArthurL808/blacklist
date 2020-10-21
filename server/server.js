@@ -2,10 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const api = require("./routes/api/index");
 const decorator = require("./database/decorator");
-const session = require("express-session");
-const passport = require("passport");
-const redis = require("redis");
-const RedisStore = require("connect-redis")(session);
+
 
 require("dotenv").config();
 
@@ -26,21 +23,14 @@ if (!PORT || !SESSION_SECRET || !REDIS_HOSTNAME) {
   return process.exit(1);
 }
 
-let client = redis.createClient({ url: process.env.REDIS_HOSTNAME });
+
 
 const app = express();
 app.use(bodyParser.json({ extended: true }));
 
 app.use(decorator);
 
-app.use(
-  session({
-    store: new RedisStore({ client }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-  })
-);
+
 // function isAuthenticated(req, res, next) {
 //   if (req.isAuthenticated()) {
 //     return next();
@@ -48,20 +38,6 @@ app.use(
 //     return res.redirect("/login.html");
 //   }
 // }
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser(function (user, done) {
-  console.log("serializing");
-  return done(null, { id: user.id, username: user.email });
-});
-
-passport.deserializeUser(function (user, done) {
-  console.log("deserializing");
-  console.log(user);
-  return done(null, user);
-});
 
 // routes
 app.use('/api/auth', api.auth);

@@ -3,18 +3,17 @@ import { connect } from "react-redux";
 import Styles from "./LoginForm.module.scss";
 import { loginAction } from "../../actions";
 
-const LoginForm = () => {
+const LoginForm = ({...props}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("yeet");
     let credentials = {
       email: email,
       password: password
     }
-    loginAction(credentials)
+    props.login(credentials)
   };
 
   return (

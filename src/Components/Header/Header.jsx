@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import Styles from "./Header.module.scss";
-
-const Header = () => {
+import { logoutAction } from "../../actions/index";
+const Header = ({ ...props }) => {
   return (
     <div className={Styles.header}>
       <h1>
@@ -17,10 +18,18 @@ const Header = () => {
         <li>
           <a href="/myblacklist">My Blacklist</a>
         </li>
-        <li>Logout</li>
+        <button onClick={props.logout}>Logout</button>
       </ul>
     </div>
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch(logoutAction());
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Header);
