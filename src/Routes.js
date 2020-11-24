@@ -7,6 +7,7 @@ import MyBlacklist from "./Components/MyBlacklist";
 import Huntboard from "./Components/Huntboard";
 import NotFound from "./Components/NotFound";
 import NewPerson from "./Components/Persons/NewPerson";
+import AuthService from "./AuthService.js";
 import LoginForm from "./Components/LoginForm";
 
 export const routes = [
@@ -40,36 +41,26 @@ export const routes = [
     exact: true,
     component: NewPerson,
   },
-  {
-    path: "/login",
-    exact: true,
-    component: LoginForm,
-  },
 ];
-// const PrivateRoutes = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={(props) =>
-//       auth.isAuthenticated === true ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect to="/login" />
-//       )
-//     }
-//   />
-// );
+const auth = new AuthService();
+
 const Routes = () => {
   return (
     <>
       <Switch>
-        {routes.map((route, i) => (
-          <Route
-            key={`global_routes_${i}`}
-            path={route.path}
-            exact={route.exact}
-            component={route.component}
-          />
-        ))}
+        <Route path={"/login"} exact={true} component={LoginForm} />
+        {auth.isAuthenticated() === true ? (
+          routes.map((route, i) => (
+            <Route
+              key={`global_routes_${i}`}
+              path={route.path}
+              exact={route.exact}
+              component={route.component}
+            />
+          ))
+        ) : (
+          <Redirect to="/login" />
+        )}
         <Route component={NotFound} />
       </Switch>
     </>

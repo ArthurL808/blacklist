@@ -13,7 +13,8 @@ export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
 export const ADD_ADDRESS = "ADD_ADDRESS";
 export const ADD_PERSON = "ADD_PERSON";
 
-export const LOGIN = "LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+// export const LOGIN_ERROR = "LOGIN_ERROR"
 export const LOGOUT = "LOGOUT";
 
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
@@ -136,12 +137,16 @@ export const loginAction = (credentails) => async (dispatch) => {
     .post("/api/auth/login", credentails)
     .then((res) => {
       return dispatch({
-        type: LOGIN,
+        type: LOGIN_SUCCESS,
         payload: res.data,
       });
     })
     .catch((err) => {
       console.log(err);
+      // return dispatch({
+      //   type: LOGIN_ERROR,
+      //   payload: 
+      // })
     });
 };
 

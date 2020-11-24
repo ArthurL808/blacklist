@@ -1,21 +1,22 @@
-import { LOGIN, LOGOUT } from "../actions/index";
+import {LOGIN_SUCCESS, LOGOUT } from "../actions/index";
 
 const initialState = {
-  id: 0,
-  username: "",
-  name: "",
+  currentUser: {},
+  loggedIn: false,
+  loginError: false,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN:
-      console.log("payload", action.payload);
+    case LOGIN_SUCCESS:
+      
       return {
         ...state,
-        state: action.payload,
+        loggedIn: true,
+        currentUser: {...action.payload},
       };
     case LOGOUT:
-      return { id: 0, username: "", name: "" };
+      return { ...state, users: [], loggedIn: false };
     default:
       return state;
   }

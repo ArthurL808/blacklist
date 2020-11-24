@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Styles from "./LoginForm.module.scss";
 import { loginAction } from "../../actions";
 
-const LoginForm = ({...props}) => {
+const LoginForm = ({ ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,14 +11,13 @@ const LoginForm = ({...props}) => {
     e.preventDefault();
     let credentials = {
       email: email,
-      password: password
-    }
-    props.login(credentials)
+      password: password,
+    };
+    props.login(credentials);
   };
 
   return (
     <div>
-      login
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Email"
