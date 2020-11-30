@@ -14,6 +14,7 @@ const LoginForm = ({ ...props }) => {
       password: password,
     };
     props.login(credentials);
+    props.history.replace("/");
   };
 
   return (

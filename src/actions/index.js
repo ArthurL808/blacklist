@@ -14,7 +14,7 @@ export const ADD_ADDRESS = "ADD_ADDRESS";
 export const ADD_PERSON = "ADD_PERSON";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-// export const LOGIN_ERROR = "LOGIN_ERROR"
+export const LOGIN_ERROR = "LOGIN_ERROR"
 export const LOGOUT = "LOGOUT";
 
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
@@ -143,10 +143,10 @@ export const loginAction = (credentails) => async (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-      // return dispatch({
-      //   type: LOGIN_ERROR,
-      //   payload: 
-      // })
+      return dispatch({
+        type: LOGIN_ERROR,
+        payload: err.message
+      })
     });
 };
 
