@@ -1,29 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const session = require("express-session");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local");
-
-require("dotenv").config();
-
 const User = require("../../../database/models/User");
-const redis = require("redis");
-const RedisStore = require("connect-redis")(session);
 const saltRounds = 12;
-let client = redis.createClient({ url: process.env.REDIS_HOSTNAME });
-
-router.use(
-  session({
-    store: new RedisStore({ client }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
-router.use(passport.initialize());
-router.use(passport.session());
 
 passport.use(
   new LocalStrategy({ usernameField: "email" }, function (
@@ -69,7 +50,7 @@ passport.deserializeUser(function (user, done) {
 });
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.send(req.session.passport.user);
+  res.send(req.user);
 });
 
 router.post("/register", (req, res) => {
