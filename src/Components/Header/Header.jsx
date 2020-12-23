@@ -1,7 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
 import Styles from "./Header.module.scss";
-import { logoutAction } from "../../actions/index";
+import auth from "../../authService";
+import { withRouter } from "react-router-dom";
+
 const Header = ({ ...props }) => {
   return (
     <div className={Styles.header}>
@@ -18,18 +19,18 @@ const Header = ({ ...props }) => {
         <li>
           <a href="/myblacklist">My Blacklist</a>
         </li>
-        <button onClick={props.logout}>Logout</button>
+        <button
+          onClick={() => {
+            auth.logout(() => {
+              props.history.push("/login");
+            });
+          }}
+        >
+          Logout
+        </button>
       </ul>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logout: () => {
-      dispatch(logoutAction());
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Header);
+export default withRouter(Header);

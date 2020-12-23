@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import Styles from "./LoginForm.module.scss";
-import { loginAction } from "../../actions";
+import { Redirect } from "react-router-dom";
+// import Styles from "./LoginForm.module.scss";
+import auth from "../../authService";
 
 const LoginForm = ({ ...props }) => {
   const [email, setEmail] = useState("");
@@ -13,11 +13,14 @@ const LoginForm = ({ ...props }) => {
       email: email,
       password: password,
     };
-    props.login(credentials);
+    auth.login(credentials, () => {
+      props.history.push("/");
+    });
   };
 
   return (
     <div>
+      {auth.isAuthenticated() ? <Redirect to="/" /> : null}
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Email"
@@ -33,17 +36,9 @@ const LoginForm = ({ ...props }) => {
 
         <input type="submit" value="Login" />
       </form>
-      <a href="">Not a member click here to register.</a>
+      <a href="/register">Not a member click here to register.</a>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (credentials) => {
-      dispatch(loginAction(credentials));
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default LoginForm;

@@ -27,6 +27,9 @@ export const loadDeragatoryMarksAsync = () => async (dispatch) => {
       });
     })
     .catch((err) => {
+      if (err.status === 401){
+        // this.history.pushState(null,'/login')
+      }
       console.log(err);
     });
 };
@@ -132,34 +135,34 @@ export const addDeragatoryMarkAsync = (deragatoryMark) => {
     });
 };
 
-export const loginAction = (credentails) => async (dispatch) => {
-  await axios
-    .post("/api/auth/login", credentails)
-    .then((res) => {
-      return dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      return dispatch({
-        type: LOGIN_ERROR,
-        payload: err.message
-      })
-    });
-};
+// export const loginAction = (credentails) => async (dispatch) => {
+//   await axios
+//     .post("/api/auth/login", credentails)
+//     .then((res) => {
+//       return dispatch({
+//         type: LOGIN_SUCCESS,
+//         payload: res.data,
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       return dispatch({
+//         type: LOGIN_ERROR,
+//         payload: err.message
+//       })
+//     });
+// };
 
-export const logoutAction = () => async (dispatch) => {
-  await axios
-    .post("/api/auth/logout")
-    .then((res) => {
-      return dispatch({
-        type: LOGOUT,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// export const logoutAction = () => async (dispatch) => {
+//   await axios
+//     .post("/api/auth/logout")
+//     .then((res) => {
+//       return dispatch({
+//         type: LOGOUT,
+//         payload: res.data,
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };

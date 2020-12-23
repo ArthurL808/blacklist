@@ -1,102 +1,143 @@
-import React, { useState } from "react";
-import PlacesAutocomplete from "react-places-autocomplete";
-import { addPersonAsync } from "../../actions";
+import React, { useState, useEffect, useRef } from "react";
+// import { addPersonAsync } from "../../actions";
 
-const AddressAutocomplete = ({ person }) => {
-  const [address, setAddress] = useState("");
-  const [zipcode, setZipcode] = useState(null);
-  const [aptNumber, setAptNumber] = useState("");
-  const [reason, setReason] = useState(null);
-  const [personRole, setPersonRole] = useState("");
+const AddressAutocomplete = () => {
+  const [address, setAddress] = useState({
+    street_number: "",
+    route: "",
+    locality: "",
+    administrative_area_level_1: "",
+    country: "",
+    postal_code: "",
+  });
 
-  const handleSelect = async (value) => {
-    setAddress(value);
+  const addressRef = useRef({
+    street_number: "",
+    route: "",
+    locality: "",
+    administrative_area_level_1: "",
+    country: "",
+    postal_code: ""
+  })
+
+  const autocomplete = useRef(null);
+
+  useEffect(() => {
+    autocomplete.current = new window.google.maps.places.Autocomplete(
+      document.getElementById("autocomplete"),
+      { types: ["geocode"] }
+    );
+    autocomplete.current.setFields(["address_component"]);
+    autocomplete.current.addListener("place_changed", handlePlaceSelect);
+  });
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setAddress({ ...address, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handlePlaceSelect = () => {
+    let placeObject = autocomplete.current.getPlace();
 
-    function getFormData(object) {
-      const formData = new FormData();
-      Object.keys(object).forEach((key) => formData.append(key, object[key]));
+    for (const component of placeObject.address_components) {
+      const addressType = component.types[0];
+      if (addressType in address) {
+        const val = component.short_name;
+        addressRef.current[addressType] = val
+      }
+    }
+    setAddress(addressRef.current)
+  };
 
-      return formData;
+  const geolocate = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const geolocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        const circle = new window.google.maps.Circle({
+          center: geolocation,
+          radius: position.coords.accuracy,
+        });
+        autocomplete.current.setBounds(circle.getBounds());
+      });
     }
-    const data = getFormData(person);
-    const fullAddress = {
-      address: address,
-      zipcode: zipcode,
-      aptNumber: aptNumber,
-    };
-    const deragatoryMark = {
-      reason_id: reason,
-      person_role: personRole
-    }
-    addPersonAsync(data, fullAddress,deragatoryMark);
   };
 
   return (
     <>
-    <h2>Address</h2>
-    <form onSubmit={handleSubmit}>
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
-          return (
-            <div>
-              <input {...getInputProps({ placeholder: "Type Address" })} />
-              <div>
-                {loading ? <div>...loading</div> : null}
-                <div className="autocomplete-dropdown">
-                  {suggestions.map((suggestion) => {
-                    const style = {
-                      backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
-                    };
-                    return (
-                      <div {...getSuggestionItemProps(suggestion, { style })}>
-                        {suggestion.description}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      </PlacesAutocomplete>
-      <label>Apt#</label>
-      <input type="text" onChange={setAptNumber} name="aptNumber" />
-      <label>Zipcode</label>
-      <input
-        type="number"
-        min="0"
-        max="99999"
-        onChange={setZipcode}
-        name="zipcode"
-      />
+      <div>
+        <form>
+          <input
+            id="autocomplete"
+            type="text"
+            placeholder={"Enter Your Address"}
+            onFocus={geolocate()}
+          />
 
-        <h2>Deragatory Marks</h2>
-      <select name="reason_id" onChange={setReason}>
-        <option value={1}>Non-Payment</option>
-        <option value={2}>Fraud</option>
-        <option value={3}>Skipped Bail</option>
-        <option value={4}>No Communication</option>
-        <option value={5}>Aggressive</option>
-        <option value={6}>Hidding Fugitive</option>
-        <option value={7}>Non-Compliance W/Terms</option>
-        <option value={8}>Other</option>
-      </select>
+          <input
+            type="text"
+            id="street_number"
+            name={"street_number"}
+            value={address.street_number}
+            placeholder="Street Number"
+            onChange={handleChange}
+          />
 
-      <select onChange={setPersonRole} name="personRole">
-        <option value="defendant">Defendant</option>
-        <option value="cosigner">Cosigner</option>
-      </select>
+          <input
+            type="text"
+            id="route"
+            name={"route"}
+            value={address.route}
+            placeholder="Street Name"
+            onChange={handleChange}
+          />
 
-      <input type="submit" value="Submit" />
-    </form>
+          <input
+            type="text"
+            id="locality"
+            name={"locality"}
+            value={address.locality}
+            placeholder="City"
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            id="administrative_area_level_1"
+            name={"administrative_area_level_1"}
+            value={address.administrative_area_level_1}
+            placeholder="address"
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            id="country"
+            name={"country"}
+            value={address.country}
+            placeholder="Country"
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            id="postal_code"
+            name={"postal_code"}
+            value={address.postal_code}
+            placeholder="Zipcode"
+            onChange={handleChange}
+          />
+        </form>
+        <button
+          onClick={() => {
+            console.log(address);
+          }}
+        >
+          submit
+        </button>
+      </div>
     </>
   );
 };

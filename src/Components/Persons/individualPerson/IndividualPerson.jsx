@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Styles from "./IndividualPerson.module.scss";
+// import Styles from "./IndividualPerson.module.scss";
 import { connect } from "react-redux";
 import { loadPersonAsync } from "../../../actions";
 import moment from "moment";
