@@ -26,7 +26,7 @@ router.get("/onPerson/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   return req.db.DeragatoryMark.forge({
-    user_id: req.body.user_id,
+    user_id: req.user.id,
     reason_id: req.body.reason_id,
     on_person: req.body.person_id,
     person_role: req.body.person_role,

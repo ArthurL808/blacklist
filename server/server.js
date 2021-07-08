@@ -27,7 +27,6 @@ if (!PORT || !SESSION_SECRET || !REDIS_HOSTNAME) {
   return process.exit(1);
 }
 
-
 let client = redis.createClient({ url: process.env.REDIS_HOSTNAME });
 const app = express();
 app.use(bodyParser.json({ extended: true }));
@@ -41,7 +40,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-
 
 app.use(passport.initialize());
 app.use(passport.session());

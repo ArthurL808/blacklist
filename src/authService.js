@@ -22,7 +22,7 @@ class Auth {
     return axios
       .post("/api/auth/logout")
       .then((res) => {
-        localStorage.removeItem('token')
+        sessionStorage.removeItem('token')
         console.log('logged out')
         cb()
       })
@@ -37,11 +37,11 @@ class Auth {
   }
 
   setToken(token){
-    localStorage.setItem('token',token)
+    sessionStorage.setItem('token',token)
   }
 
   getToken(){
-    return localStorage.getItem('token')
+    return sessionStorage.getItem('token')
   }
 
   

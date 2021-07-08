@@ -20,7 +20,10 @@ class Home extends Component {
   render() {
     return (
       <>
+      <div>
         <Searchbar error={this.props.personsSearch.error} />
+        <a href={`/newPerson`}>Add new person to blacklist</a>
+      </div>
 
         {this.props.personsSearch.persons.length > 0 ? (
           <div>

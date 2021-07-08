@@ -17,7 +17,6 @@ passport.use(
             return done(null, false, { message: "bad username or password" });
           } else {
             user = user.toJSON();
-
             bcrypt.compare(password, user.password).then((res) => {
               // Happy route: username exists, password matches
               if (res) {

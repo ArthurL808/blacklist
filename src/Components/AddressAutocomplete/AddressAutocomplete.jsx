@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-// import { addPersonAsync } from "../../actions";
 
-const AddressAutocomplete = () => {
+
+const AddressAutocomplete = ({ ...props }) => {
   const [address, setAddress] = useState({
     street_number: "",
     route: "",
@@ -9,6 +9,7 @@ const AddressAutocomplete = () => {
     administrative_area_level_1: "",
     country: "",
     postal_code: "",
+    apt_number: "",
   });
 
   const addressRef = useRef({
@@ -17,8 +18,9 @@ const AddressAutocomplete = () => {
     locality: "",
     administrative_area_level_1: "",
     country: "",
-    postal_code: ""
-  })
+    postal_code: "",
+    apt_number: "",
+  });
 
   const autocomplete = useRef(null);
 
@@ -33,6 +35,9 @@ const AddressAutocomplete = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
+    if(props.onChange){
+      return props.onChange(e.target.value)
+    }
     setAddress({ ...address, [e.target.name]: e.target.value });
   };
 
@@ -43,10 +48,10 @@ const AddressAutocomplete = () => {
       const addressType = component.types[0];
       if (addressType in address) {
         const val = component.short_name;
-        addressRef.current[addressType] = val
+        addressRef.current[addressType] = val;
       }
     }
-    setAddress(addressRef.current)
+    setAddress(addressRef.current);
   };
 
   const geolocate = () => {
@@ -68,7 +73,6 @@ const AddressAutocomplete = () => {
   return (
     <>
       <div>
-        <form>
           <input
             id="autocomplete"
             type="text"
@@ -96,6 +100,15 @@ const AddressAutocomplete = () => {
 
           <input
             type="text"
+            id="apt_number"
+            name={"apt_number"}
+            value={address.apt_number}
+            placeholder="Apartment number"
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
             id="locality"
             name={"locality"}
             value={address.locality}
@@ -108,7 +121,7 @@ const AddressAutocomplete = () => {
             id="administrative_area_level_1"
             name={"administrative_area_level_1"}
             value={address.administrative_area_level_1}
-            placeholder="address"
+            placeholder="State"
             onChange={handleChange}
           />
 
@@ -129,14 +142,6 @@ const AddressAutocomplete = () => {
             placeholder="Zipcode"
             onChange={handleChange}
           />
-        </form>
-        <button
-          onClick={() => {
-            console.log(address);
-          }}
-        >
-          submit
-        </button>
       </div>
     </>
   );

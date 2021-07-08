@@ -1,4 +1,5 @@
 import axios from "axios";
+import auth from "../authService";
 
 export const LOAD_DERAGATORYMARKS = "LOAD_DERAGATORYMARKS";
 
@@ -14,7 +15,7 @@ export const ADD_ADDRESS = "ADD_ADDRESS";
 export const ADD_PERSON = "ADD_PERSON";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_ERROR = "LOGIN_ERROR"
+export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 
 export const loadDeragatoryMarksAsync = () => async (dispatch) => {
@@ -27,8 +28,8 @@ export const loadDeragatoryMarksAsync = () => async (dispatch) => {
       });
     })
     .catch((err) => {
-      if (err.status === 401){
-        // this.history.pushState(null,'/login')
+      if (err.status === 401) {
+        auth.logout();
       }
       console.log(err);
     });
@@ -97,16 +98,17 @@ export const loadActiveHuntsAsync = () => async (dispatch) => {
     });
 };
 
-export const addPersonAsync = (data, fullAddress, deragatoryMark) => {
+export const addPersonAsync = (data, address, deragatoryMark) => {
   axios
     .post("/api/persons", data)
     .then((res) => {
       return res.data;
     })
     .then((res) => {
-      fullAddress.person_id = res.id;
+      address.person_id = res.id;
       deragatoryMark.on_person = res.id;
-      addAddressAsync(fullAddress);
+      addAddressAsync(address);
+      addDeragatoryMarkAsync(deragatoryMark);
     })
     .catch((err) => {
       console.log(err);

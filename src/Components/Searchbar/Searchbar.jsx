@@ -13,9 +13,10 @@ const Searchbar = ({ ...props }) => {
 
   return (
     <div className={Styles.search}>
+  {/* Make search a debounce function instead of submit */}
       <form onSubmit={handleSubmit}>
         <label>
-          First Name:
+          First or Last Name:
           <input
             type="text"
             placeholder="Search..."
