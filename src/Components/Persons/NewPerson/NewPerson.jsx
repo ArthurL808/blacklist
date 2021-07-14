@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AddressAutocomplete from "../../AddressAutocomplete";
 import DeragatoryMark from "../../DeragatoryMark";
-import { addPersonAsync } from "../../../actions";
+import axios from "axios";
 
 class NewPerson extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class NewPerson extends Component {
         country: "",
         postal_code: "",
         apt_number: "",
+        on_person: null,
       },
       deragatoryMark: {
         reason_id: 1,
@@ -35,8 +36,10 @@ class NewPerson extends Component {
 
     this.handlePersonChange = this.handlePersonChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleMarkChange = this.handleMarkChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handlePersonChange(event) {
     this.setState({
       ...this.state,
@@ -44,12 +47,38 @@ class NewPerson extends Component {
     });
   }
 
-  handleAddressChange(){}
+  handleAddressChange(address) {
+    this.setState({
+      ...this.state,
+      address: address,
+    });
+  }
 
-  handleSubmit(event) {
+  handleMarkChange(name, value) {
+    this.setState({
+      ...this.state,
+      deragatoryMark: { ...this.state.deragatoryMark, [name]: value },
+    });
+  }
+
+  async handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
-    // addPersonAsync(this.state);
+    try {
+      const results = await axios.post("/api/persons", this.state.person);
+      const personId = results.data.id;
+      this.setState({
+        ...this.state,
+        address: { ...this.state.address, on_person: personId },
+      });
+      this.setState({
+        ...this.state,
+        deragatoryMark: { ...this.state.deragatoryMark, on_person: personId },
+      });
+      await axios.post("/api/addresses", this.state.address);
+      await axios.post('/api/deragatoryMarks', this.state.deragatoryMark)
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -75,7 +104,7 @@ class NewPerson extends Component {
 
           <label>
             Gender
-            <select name="Gender_id" onChange={this.handlePersonChange}>
+            <select name="gender_id" onChange={this.handlePersonChange}>
               <option value={1}>Male</option>
               <option value={2}>Female</option>
               <option value={3}>Other</option>
@@ -127,8 +156,8 @@ class NewPerson extends Component {
 
           <input type="file" name="image" onChange={this.handlePersonChange} />
 
-          <AddressAutocomplete onChange={this.handleChange} />
-          {/* <DeragatoryMark /> */}
+          <AddressAutocomplete onAddressChange={this.handleAddressChange} />
+          <DeragatoryMark onMarkChange={this.handleMarkChange} />
         </form>
         <button onClick={this.handleSubmit}>submit</button>
       </>

@@ -26,9 +26,9 @@ router.get("/onPerson/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   return req.db.DeragatoryMark.forge({
-    user_id: req.user.id,
+    user_id: req.user,
     reason_id: req.body.reason_id,
-    on_person: req.body.person_id,
+    on_person: req.body.on_person,
     person_role: req.body.person_role,
   })
     .save()
@@ -67,12 +67,10 @@ router.delete("/:id", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res
-        .status(500)
-        .json({
-          message: "Something went wrong trying to delete a mark.",
-          error: err,
-        });
+      res.status(500).json({
+        message: "Something went wrong trying to delete a mark.",
+        error: err,
+      });
     });
 });
 

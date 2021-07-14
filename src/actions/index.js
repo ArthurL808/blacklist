@@ -18,8 +18,8 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 
-export const loadDeragatoryMarksAsync = () => async (dispatch) => {
-  await axios
+export const loadDeragatoryMarksAsync = () => (dispatch) => {
+   axios
     .get("/api/deragatorymarks")
     .then((response) => {
       dispatch({
@@ -59,12 +59,13 @@ export const searchPersonsAsync = (searchTerm) => async (dispatch) => {
     });
 };
 
-export const loadPersonAsync = (id) => async (dispatch) => {
+//fix this so it is only making one request. make another function?
+export const loadPersonAsync = (id) =>  (dispatch) => {
   let requestPerson = axios.get(`/api/persons/${id}`);
   let requestDeragatoryMarksOnPerson = axios.get(
     `/api/deragatoryMarks/onPerson/${id}`
   );
-  await axios
+   axios
     .all([requestPerson, requestDeragatoryMarksOnPerson])
     .then(
       axios.spread((...response) => {
@@ -84,8 +85,8 @@ export const loadPersonAsync = (id) => async (dispatch) => {
     });
 };
 
-export const loadActiveHuntsAsync = () => async (dispatch) => {
-  await axios
+export const loadActiveHuntsAsync = () =>  (dispatch) => {
+   axios
     .get("/api/hunts/active")
     .then((response) => {
       dispatch({
@@ -98,28 +99,27 @@ export const loadActiveHuntsAsync = () => async (dispatch) => {
     });
 };
 
-export const addPersonAsync = (data, address, deragatoryMark) => {
+export const addPersonAsync = (data) => {
   axios
     .post("/api/persons", data)
     .then((res) => {
+      console.log(res);
       return res.data;
     })
     .then((res) => {
-      address.person_id = res.id;
-      deragatoryMark.on_person = res.id;
-      addAddressAsync(address);
-      addDeragatoryMarkAsync(deragatoryMark);
+      return res.id
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-export const addAddressAsync = (fullAddress) => {
+export const addAddressAsync = (address) => {
   axios
-    .post("/api/addresses", fullAddress)
+    .post("/api/addresses", address)
     .then((res) => {
       console.log(res);
+      return res;
     })
     .catch((err) => {
       console.log(err);

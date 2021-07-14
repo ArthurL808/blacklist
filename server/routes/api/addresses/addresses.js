@@ -10,7 +10,7 @@ router.post("/", (req, res) => {
     city: req.body.locality,
     state: req.body.administrative_area_level_1,
     country: req.body.country,
-    person_id: req.body.person_id,
+    person_id: req.body.on_person,
   })
     .save()
     .then((results) => {

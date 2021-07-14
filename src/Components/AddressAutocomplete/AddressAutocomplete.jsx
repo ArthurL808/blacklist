@@ -33,13 +33,13 @@ const AddressAutocomplete = ({ ...props }) => {
     autocomplete.current.addListener("place_changed", handlePlaceSelect);
   });
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    if(props.onChange){
-      return props.onChange(e.target.value)
-    }
-    setAddress({ ...address, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   e.preventDefault();
+  //   console.log(props)
+  //   // if(props.onAddressChange){
+  //   //   return props.onAddressChange(e.target.value)
+  //   // }
+  // };
 
   const handlePlaceSelect = () => {
     let placeObject = autocomplete.current.getPlace();
@@ -50,6 +50,9 @@ const AddressAutocomplete = ({ ...props }) => {
         const val = component.short_name;
         addressRef.current[addressType] = val;
       }
+    }
+    if(props.onAddressChange){
+      return props.onAddressChange(addressRef.current)
     }
     setAddress(addressRef.current);
   };
@@ -78,69 +81,6 @@ const AddressAutocomplete = ({ ...props }) => {
             type="text"
             placeholder={"Enter Your Address"}
             onFocus={geolocate()}
-          />
-
-          <input
-            type="text"
-            id="street_number"
-            name={"street_number"}
-            value={address.street_number}
-            placeholder="Street Number"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            id="route"
-            name={"route"}
-            value={address.route}
-            placeholder="Street Name"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            id="apt_number"
-            name={"apt_number"}
-            value={address.apt_number}
-            placeholder="Apartment number"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            id="locality"
-            name={"locality"}
-            value={address.locality}
-            placeholder="City"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            id="administrative_area_level_1"
-            name={"administrative_area_level_1"}
-            value={address.administrative_area_level_1}
-            placeholder="State"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            id="country"
-            name={"country"}
-            value={address.country}
-            placeholder="Country"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            id="postal_code"
-            name={"postal_code"}
-            value={address.postal_code}
-            placeholder="Zipcode"
-            onChange={handleChange}
           />
       </div>
     </>
