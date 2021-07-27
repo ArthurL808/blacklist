@@ -1,59 +1,109 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 // import Styles from "./IndividualPerson.module.scss";
-import { connect } from "react-redux";
-import { loadPersonAsync } from "../../../actions";
+import AddDeragatoryMarks from "../../DeragatoryMark/AddDeragatoryMarks";
+import DeragatoryMarks from "../../DeragatoryMark";
 import moment from "moment";
-
+import auth from "../../../authService";
 
 const IndividualPerson = ({ ...props }) => {
-  const { match, loadPerson, person } = props;
+  const { match, loadPerson } = props;
   const id = parseInt(match.params.id);
+  const [addMark, setAddMark] = useState(false);
+  const [currentUser, setCurrentUser] = useState(0);
+  const [person, setPerson] = useState({
+    id: 0,
+    first_name: "",
+    last_name: "",
+    addresses: [],
+    dob: "",
+    gender_id: 0,
+    created_at: "",
+    updated_at: "",
+    associates: [],
+    gender: {
+      id: 0,
+      gender: "",
+      created_at: "",
+      updated_at: "",
+    },
+    marks: [],
+  });
 
   useEffect(() => {
-    loadPerson(id);
-  }, [id, loadPerson]);
+    let user = auth.getToken();
+    setCurrentUser(parseInt(user));
+    axios
+      .get(`/api/persons/${id}`)
+      .then((results) => {
+        return setPerson(results.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [id]);
+
   return (
     <>
       {person && (
         <div>
-          <img src={person.image_url} alt="client"/>
+          <img src={person.image_url} alt="client" />
           <h3>
             {person.last_name}, {person.first_name}
           </h3>
           <p>Addresses:</p>
-          {person.addresses.map((address)=>{
+          {person.addresses.map((address) => {
             return (
               <div key={address.id}>
-                {address.street_address}, {address.zipcode} Apt#: {address.apt_number}
+                {address.street_address}, {address.zipcode} Apt#:{" "}
+                {address.apt_number}
               </div>
-            )
+            );
           })}
           <p>Gender: {person.gender.gender}</p>
           <p>
-            DoB: {moment(person.dob).format('MMM DD, YYYY')} Age: {moment(person.dob).toNow(true)}
+            DoB: {moment(person.dob).format("MMM DD, YYYY")} Age:{" "}
+            {moment(person.dob).toNow(true)}
           </p>
           <div>
             <h4>Associates</h4>
-            {person.associates.map((associate)=>{
-              return(
+            {person.associates.map((associate) => {
+              return (
                 <div key={associate.id}>
-                <p>{associate.last_name}, {associate.first_name}</p>
-                <p>Nickname: {associate.nickname}</p>
-                <p>{associate.relationship}</p>
+                  <p>
+                    {associate.last_name}, {associate.first_name}
+                  </p>
+                  <p>Nickname: {associate.nickname}</p>
+                  <p>{associate.relationship}</p>
                 </div>
-              )
+              );
             })}
           </div>
           <div>
             <h4>Blacklist Offenses</h4>
-            {person.marks.map((mark) =>{
-              return <div key= {mark.id}>
-              <p>{mark.createdBy.company_name}</p>
-              <p>{mark.reason.reason}</p>
-              <p>{mark.personRole}</p>
-              <p>{moment(mark.created_at).fromNow()} | {moment(mark.created_at).format('MMM Do, YYYY')}</p>
-              </div>
-            })}
+
+            {person.id && <DeragatoryMarks on_person={person.id} />}
+
+            {person.marks.some(
+              (mark) => mark.user_id === currentUser
+            ) ? null : (
+              <button
+                onClick={() => {
+                  setAddMark(!addMark);
+                }}
+              >
+                +Add Mark
+              </button>
+            )}
+
+            {addMark ? (
+              <AddDeragatoryMarks
+                addMark={addMark}
+                setAddMark={setAddMark}
+                on_person={person.id}
+              />
+            ) : null}
+            
           </div>
         </div>
       )}
@@ -61,19 +111,4 @@ const IndividualPerson = ({ ...props }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    person: state.persons.individualPerson,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadPerson: (id) => {
-      dispatch(loadPersonAsync(id));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(IndividualPerson);
+export default IndividualPerson;

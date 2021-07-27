@@ -20,10 +20,10 @@ class Home extends Component {
   render() {
     return (
       <>
-      <div>
-        <Searchbar error={this.props.personsSearch.error} />
-        <a href={`/newPerson`}>Add new person to blacklist</a>
-      </div>
+        <div>
+          <Searchbar error={this.props.personsSearch.error} />
+          <a href={`/newPerson`}>Add new person to blacklist</a>
+        </div>
 
         {this.props.personsSearch.persons.length > 0 ? (
           <div>
@@ -34,9 +34,6 @@ class Home extends Component {
                     <p>
                       {person.last_name}, {person.first_name}
                     </p>
-                    {person.reasons.map((reason) => {
-                      return <p key={reason.id}>{reason.reason}</p>;
-                    })}
                   </a>
                 </div>
               );
@@ -45,45 +42,25 @@ class Home extends Component {
         ) : (
           <div className={Styles.container}>
             <div className={Styles.cardContainer}>
-              <h3>Defendants</h3>
+              <h3>Latest Blacklisted Clients</h3>
+              {/* need this to be more dynamic */}
               {this.props.deragatoryMarks
-                .filter((marks) => marks.person_role.includes("defendant"))
-                .map((defenantMark) => {
+                .slice((0, 5))
+                .map((recentMarks) => {
+                  console.log(recentMarks);
                   return (
-                    <div className={Styles.card} key={defenantMark.id}>
+                    <div className={Styles.card} key={recentMarks.id}>
                       <a
-                        href={`/deragatoryMarks/onPerson/${defenantMark.onPerson.id}`}
+                        href={`/deragatoryMarks/onPerson/${recentMarks.onPerson.id}`}
                       >
-                        <p>First name: {defenantMark.onPerson.first_name}</p>
-                        <p>Last name: {defenantMark.onPerson.last_name}</p>
-                        <p>Deragatory Mark: {defenantMark.reason.reason}</p>
-                        <p>Blacklisted By: {defenantMark.createdBy.name}</p>
+                        <p>First name: {recentMarks.onPerson.first_name}</p>
+                        <p>Last name: {recentMarks.onPerson.last_name}</p>
+                        {/* possibly display what marks where checked here.  */}
+                        {/* <p>Deragatory Mark: {defenantMark.reason.reason}</p> */}
+                        <p>Blacklisted By: {recentMarks.createdBy.name}</p>
                         <p>
                           Date created:{" "}
-                          {moment(defenantMark.updated_at).fromNow()}
-                        </p>
-                      </a>
-                    </div>
-                  );
-                })}
-            </div>
-            <div className={Styles.cardContainer}>
-              <h3>Cosigners</h3>
-              {this.props.deragatoryMarks
-                .filter((marks) => marks.person_role.includes("cosigner"))
-                .map((cosignerMark) => {
-                  return (
-                    <div className={Styles.card} key={cosignerMark.id}>
-                      <a
-                        href={`/deragatoryMarks/onPerson/${cosignerMark.onPerson.id}`}
-                      >
-                        <p>First name: {cosignerMark.onPerson.first_name}</p>
-                        <p>Last name: {cosignerMark.onPerson.last_name}</p>
-                        <p>Deragatory Mark: {cosignerMark.reason.reason}</p>
-                        <p>Blacklisted By: {cosignerMark.createdBy.name}</p>
-                        <p>
-                          Date created:{" "}
-                          {moment(cosignerMark.updated_at).fromNow()}
+                          {moment(recentMarks.updated_at).fromNow()}
                         </p>
                       </a>
                     </div>
@@ -98,7 +75,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     deragatoryMarks: state.deragatoryMarks,
     personsSearch: state.persons.personsSearch,

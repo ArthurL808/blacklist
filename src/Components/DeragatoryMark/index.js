@@ -1,2 +1,2 @@
-import DeragatoryMark from "./DeragatoryMark";
-export default DeragatoryMark;
+import DeragatoryMarks from "./DeragatoryMarks";
+export default DeragatoryMarks;

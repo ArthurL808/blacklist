@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AddressAutocomplete from "../../AddressAutocomplete";
-import DeragatoryMark from "../../DeragatoryMark";
+import AddDeragatoryMark from "../../DeragatoryMark/AddDeragatoryMarks";
 import axios from "axios";
 
 class NewPerson extends Component {
@@ -27,10 +27,16 @@ class NewPerson extends Component {
         on_person: null,
       },
       deragatoryMark: {
-        reason_id: 1,
+        non_payment: false,
+        fraud: false,
+        skipped_bail: false,
+        aggressive: false,
+        hiding_fugitive: false,
+        non_compliance_with_terms: false,
+        no_communication: false,
+        other: false,
         on_person: null,
         user_id: null,
-        person_role: "defendant",
       },
     };
 
@@ -75,7 +81,7 @@ class NewPerson extends Component {
         deragatoryMark: { ...this.state.deragatoryMark, on_person: personId },
       });
       await axios.post("/api/addresses", this.state.address);
-      await axios.post('/api/deragatoryMarks', this.state.deragatoryMark)
+      await axios.post("/api/deragatoryMarks", this.state.deragatoryMark);
     } catch (error) {
       console.error(error);
     }
@@ -157,7 +163,7 @@ class NewPerson extends Component {
           <input type="file" name="image" onChange={this.handlePersonChange} />
 
           <AddressAutocomplete onAddressChange={this.handleAddressChange} />
-          <DeragatoryMark onMarkChange={this.handleMarkChange} />
+          <AddDeragatoryMark mark={this.state.deragatoryMark}  onMarkChange={this.handleMarkChange} />
         </form>
         <button onClick={this.handleSubmit}>submit</button>
       </>

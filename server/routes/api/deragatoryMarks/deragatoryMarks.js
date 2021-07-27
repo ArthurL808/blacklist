@@ -23,13 +23,41 @@ router.get("/onPerson/:id", (req, res) => {
       console.log(err);
     });
 });
+router.post("/onPerson/:id", (req, res) => {
+  return req.db.DeragatoryMark.forge({
+    user_id: req.user,
+    on_person: req.params.id,
+    non_payment: req.body.non_payment,
+    fraud: req.body.fraud,
+    skipped_bail: req.body.skipped_bail,
+    aggressive: req.body.aggressive,
+    hiding_fugitive: req.body.hiding_fugitive,
+    non_compliance_with_terms: req.body.non_compliance_with_terms,
+    no_communication: req.body.no_communication,
+    other: req.body.other,
+  })
+    .save()
+    .then((results) => {
+      console.log(results);
+      return res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 router.post("/", (req, res) => {
   return req.db.DeragatoryMark.forge({
     user_id: req.user,
-    reason_id: req.body.reason_id,
     on_person: req.body.on_person,
-    person_role: req.body.person_role,
+    non_payment: req.body.non_payment,
+    fraud: req.body.fraud,
+    skipped_bail: req.body.skipped_bail,
+    aggressive: req.body.aggressive,
+    hiding_fugitive: req.body.hiding_fugitive,
+    non_compliance_with_terms: req.body.non_compliance_with_terms,
+    no_communication: req.body.no_communication,
+    other: req.body.other,
   })
     .save()
     .then((results) => {

@@ -24,7 +24,7 @@ router.get("/search/:searchTerm", (req, res) => {
     );
   })
     .fetchAll({
-      withRelated: ["gender", "marks", "blacklistedBy", "reasons", "addresses"],
+      withRelated: ["gender", "marks", "blacklistedBy", "addresses"],
     })
     .then((results) => {
       return res.json(results);
