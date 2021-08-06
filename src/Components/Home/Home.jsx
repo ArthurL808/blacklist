@@ -22,7 +22,7 @@ class Home extends Component {
       <>
         <div>
           <Searchbar error={this.props.personsSearch.error} />
-          <a href={`/newPerson`}>Add new person to blacklist</a>
+          <a href={`/AddPerson`}>Add new person to blacklist</a>
         </div>
 
         {this.props.personsSearch.persons.length > 0 ? (
@@ -44,28 +44,25 @@ class Home extends Component {
             <div className={Styles.cardContainer}>
               <h3>Latest Blacklisted Clients</h3>
               {/* need this to be more dynamic */}
-              {this.props.deragatoryMarks
-                .slice((0, 5))
-                .map((recentMarks) => {
-                  console.log(recentMarks);
-                  return (
-                    <div className={Styles.card} key={recentMarks.id}>
-                      <a
-                        href={`/deragatoryMarks/onPerson/${recentMarks.onPerson.id}`}
-                      >
-                        <p>First name: {recentMarks.onPerson.first_name}</p>
-                        <p>Last name: {recentMarks.onPerson.last_name}</p>
-                        {/* possibly display what marks where checked here.  */}
-                        {/* <p>Deragatory Mark: {defenantMark.reason.reason}</p> */}
-                        <p>Blacklisted By: {recentMarks.createdBy.name}</p>
-                        <p>
-                          Date created:{" "}
-                          {moment(recentMarks.updated_at).fromNow()}
-                        </p>
-                      </a>
-                    </div>
-                  );
-                })}
+              {this.props.deragatoryMarks.slice((0, 5)).map((recentMarks) => {
+                console.log(recentMarks);
+                return (
+                  <div className={Styles.card} key={recentMarks.id}>
+                    <a
+                      href={`/deragatoryMarks/onPerson/${recentMarks.onPerson.id}`}
+                    >
+                      <p>First name: {recentMarks.onPerson.first_name}</p>
+                      <p>Last name: {recentMarks.onPerson.last_name}</p>
+                      {/* possibly display what marks where checked here.  */}
+                      {/* <p>Deragatory Mark: {defenantMark.reason.reason}</p> */}
+                      <p>Blacklisted By: {recentMarks.createdBy.name}</p>
+                      <p>
+                        Date created: {moment(recentMarks.updated_at).fromNow()}
+                      </p>
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

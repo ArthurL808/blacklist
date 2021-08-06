@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import AddressAutocomplete from "../../AddressAutocomplete";
-import AddDeragatoryMark from "../../DeragatoryMark/AddDeragatoryMarks";
+import DeragatoryMarkInput from "../../DeragatoryMark/DeragatoryMarkInput";
 import axios from "axios";
 
-class NewPerson extends Component {
+class AddPerson extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -162,8 +162,11 @@ class NewPerson extends Component {
 
           <input type="file" name="image" onChange={this.handlePersonChange} />
 
-          <AddressAutocomplete onAddressChange={this.handleAddressChange} />
-          <AddDeragatoryMark mark={this.state.deragatoryMark}  onMarkChange={this.handleMarkChange} />
+          <AddressAutocomplete onChange={this.handleAddressChange} />
+          <DeragatoryMarkInput
+            mark={this.state.deragatoryMark}
+            onChange={this.handleMarkChange}
+          />
         </form>
         <button onClick={this.handleSubmit}>submit</button>
       </>
@@ -171,4 +174,4 @@ class NewPerson extends Component {
   }
 }
 
-export default NewPerson;
+export default AddPerson;

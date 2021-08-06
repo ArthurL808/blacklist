@@ -13,9 +13,20 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  return req.db.DeragatoryMark.where({ id: req.params.id })
+    .fetch({withRelated:['onPerson','createdBy']})
+    .then((results) => {
+      return res.json(results);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+});
+
 router.get("/onPerson/:id", (req, res) => {
   return req.db.DeragatoryMark.where({ on_person: req.params.id })
-    .fetchAll({ withRelated: ["createdBy", "reason"] })
+    .fetchAll({ withRelated: ["createdBy"] })
     .then((results) => {
       return res.json(results);
     })

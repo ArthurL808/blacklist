@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddDeragatoryMark = ({ ...props }) => {
+const DeragatoryMarkInput = ({ ...props }) => {
   const [mark, setMark] = useState({
     non_payment: false,
     fraud: false,
@@ -13,8 +13,8 @@ const AddDeragatoryMark = ({ ...props }) => {
     other: false,
   });
   const handleChange = (e) => {
-    if (props.onMarkChange) {
-      return props.onMarkChange(e.target.name, e.target.checked);
+    if (props.onChange) {
+      return props.onChange(e.target.name, e.target.checked);
     }
     setMark({ ...mark, [e.target.name]: e.target.checked });
   };
@@ -110,11 +110,11 @@ const AddDeragatoryMark = ({ ...props }) => {
         />
         <label htmlFor="other">Other</label>
       </div>
-      {props.onMarkChange ? null : (
+      {props.onChange ? null : (
         <button onClick={handleSubmit}>submit</button>
       )}
     </div>
   );
 };
 
-export default AddDeragatoryMark;
+export default DeragatoryMarkInput;

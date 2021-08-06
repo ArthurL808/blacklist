@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import Styles from "./IndividualPerson.module.scss";
-import AddDeragatoryMarks from "../../DeragatoryMark/AddDeragatoryMarks";
+import DeragatoryMarkInput from "../../DeragatoryMark/DeragatoryMarkInput";
 import DeragatoryMarks from "../../DeragatoryMark";
+// import PersonMarks from "../PersonMarks";
 import moment from "moment";
 import auth from "../../../authService";
 
 const IndividualPerson = ({ ...props }) => {
-  const { match, loadPerson } = props;
-  const id = parseInt(match.params.id);
+  const id = parseInt(props.match.params.id);
   const [addMark, setAddMark] = useState(false);
   const [currentUser, setCurrentUser] = useState(0);
+  const [personMarks, setPersonMarks] = useState([]);
   const [person, setPerson] = useState({
-    id: 0,
+    id: null,
     first_name: "",
     last_name: "",
     addresses: [],
@@ -27,21 +28,25 @@ const IndividualPerson = ({ ...props }) => {
       created_at: "",
       updated_at: "",
     },
-    marks: [],
   });
 
   useEffect(() => {
-    let user = auth.getToken();
+    const user = auth.getToken();
+    const personRequest = axios.get(`/api/persons/${id}`);
+    const personMarksRequest = axios.get(`/api/deragatoryMarks/onPerson/${id}`);
     setCurrentUser(parseInt(user));
     axios
-      .get(`/api/persons/${id}`)
-      .then((results) => {
-        return setPerson(results.data);
-      })
+      .all([personRequest, personMarksRequest])
+      .then(
+        axios.spread((...response) => {
+          setPerson(response[0].data);
+          setPersonMarks(response[1].data);
+        })
+      )
       .catch((err) => {
         console.error(err);
       });
-  }, [id]);
+  }, []);
 
   return (
     <>
@@ -82,11 +87,16 @@ const IndividualPerson = ({ ...props }) => {
           <div>
             <h4>Blacklist Offenses</h4>
 
-            {person.id && <DeragatoryMarks on_person={person.id} />}
+            {personMarks.map((mark) => {
+              return (
+                <div key={mark.id}>
+                  <h3>{mark.createdBy.company_name}</h3>
+                  <DeragatoryMarks mark={mark} />
+                </div>
+              );
+            })}
 
-            {person.marks.some(
-              (mark) => mark.user_id === currentUser
-            ) ? null : (
+            {personMarks.some((mark) => mark.user_id === currentUser) ? null : (
               <button
                 onClick={() => {
                   setAddMark(!addMark);
@@ -97,13 +107,12 @@ const IndividualPerson = ({ ...props }) => {
             )}
 
             {addMark ? (
-              <AddDeragatoryMarks
+              <DeragatoryMarkInput
                 addMark={addMark}
                 setAddMark={setAddMark}
                 on_person={person.id}
               />
             ) : null}
-            
           </div>
         </div>
       )}

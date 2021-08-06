@@ -8,6 +8,13 @@ class User extends bookshelf.Model {
     return true;
   }
 
+  hunts(){
+    return this.hasMany('Hunt')
+  }
+  marks(){
+    return this.hasMany('DeragatoryMark')
+  }
+
 }
 
 module.exports = bookshelf.model("User", User);

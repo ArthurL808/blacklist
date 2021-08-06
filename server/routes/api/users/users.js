@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   return req.db.User.where({ id: req.params.id })
-    .fetch({ withRelated: ["bails"] })
+    .fetch({ withRelated: ["marks", "hunts"] })
     .then((results) => {
       res.json(results);
     })

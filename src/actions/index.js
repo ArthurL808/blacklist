@@ -19,7 +19,7 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 
 export const loadDeragatoryMarksAsync = () => (dispatch) => {
-   axios
+  axios
     .get("/api/deragatorymarks")
     .then((response) => {
       dispatch({
@@ -60,12 +60,12 @@ export const searchPersonsAsync = (searchTerm) => async (dispatch) => {
 };
 
 //fix this so it is only making one request. make another function?
-export const loadPersonAsync = (id) =>  (dispatch) => {
+export const loadPersonAsync = (id) => (dispatch) => {
   let requestPerson = axios.get(`/api/persons/${id}`);
   let requestDeragatoryMarksOnPerson = axios.get(
     `/api/deragatoryMarks/onPerson/${id}`
   );
-   axios
+  axios
     .all([requestPerson, requestDeragatoryMarksOnPerson])
     .then(
       axios.spread((...response) => {
@@ -85,8 +85,8 @@ export const loadPersonAsync = (id) =>  (dispatch) => {
     });
 };
 
-export const loadActiveHuntsAsync = () =>  (dispatch) => {
-   axios
+export const loadActiveHuntsAsync = () => (dispatch) => {
+  axios
     .get("/api/hunts/active")
     .then((response) => {
       dispatch({
@@ -107,7 +107,7 @@ export const addPersonAsync = (data) => {
       return res.data;
     })
     .then((res) => {
-      return res.id
+      return res.id;
     })
     .catch((err) => {
       console.log(err);
@@ -126,7 +126,7 @@ export const addAddressAsync = (address) => {
     });
 };
 
-export const addDeragatoryMarkAsync = (deragatoryMark) => {
+export const DeragatoryMarkInputAsync = (deragatoryMark) => {
   axios
     .post("/api/deragatoryMark", deragatoryMark)
     .then((res) => {

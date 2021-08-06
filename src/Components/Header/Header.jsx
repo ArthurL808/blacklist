@@ -4,6 +4,7 @@ import auth from "../../authService";
 import { withRouter } from "react-router-dom";
 
 const Header = ({ ...props }) => {
+  const userId = auth.getToken()
   return (
     <div className={Styles.header}>
       <h1>
@@ -13,11 +14,8 @@ const Header = ({ ...props }) => {
         <li>
           <a href="/huntboard">Huntboard</a>
         </li>
-        {/* <li>
-          <a href="/riskassesment">Risk Assesment</a>
-        </li> */}
         <li>
-          <a href="/myblacklist">My Blacklist</a>
+          <a href={`/myblacklist/${userId}`}>My Blacklist</a>
         </li>
         <button
           onClick={() => {

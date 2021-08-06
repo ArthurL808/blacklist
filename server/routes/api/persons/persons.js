@@ -39,7 +39,7 @@ router.get("/search/:searchTerm", (req, res) => {
 router.get("/:id", (req, res) => {
   return req.db.Person.where({ id: req.params.id })
     .fetch({
-      withRelated: ["gender", "associates", "marks", "addresses"],
+      withRelated: ["gender", "associates", "addresses"],
     })
     .then((results) => {
       res.json(results);
@@ -51,7 +51,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", singleUpload, (req, res) => {
-  let newPerson = {
+  let AddPerson = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     dob: req.body.dob,
@@ -60,12 +60,12 @@ router.post("/", singleUpload, (req, res) => {
     gender_id: req.body.gender_id,
   };
   if (!req.file) {
-    newPerson.image_url =
+    AddPerson.image_url =
       "https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png";
   } else {
-    newPerson.image_url = req.file.location;
+    AddPerson.image_url = req.file.location;
   }
-  return req.db.Person.forge(newPerson)
+  return req.db.Person.forge(AddPerson)
     .save()
     .then((results) => {
       res.json(results);
@@ -77,7 +77,7 @@ router.post("/", singleUpload, (req, res) => {
 });
 
 router.put("/:id", singleUpload, (req, res) => {
-  let newPerson = {
+  let AddPerson = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     address: req.body.address,
@@ -87,16 +87,16 @@ router.put("/:id", singleUpload, (req, res) => {
     gender_id: req.body.gender_id,
   };
   if (req.file) {
-    newPerson.image_url = req.file.location;
+    AddPerson.image_url = req.file.location;
   } else if (req.body.image_url && !req.file) {
-    newPerson.image_url = req.body.image_url;
+    AddPerson.image_url = req.body.image_url;
   } else {
-    newPerson.image_url =
+    AddPerson.image_url =
       "https://bailbonds-blacklist.s3-us-west-2.amazonaws.com/Portrait_Placeholder.png";
   }
 
   return req.db.Person.forge({ id: req.params.id })
-    .save(newPerson)
+    .save(AddPerson)
     .then((results) => {
       res.json(results);
     })

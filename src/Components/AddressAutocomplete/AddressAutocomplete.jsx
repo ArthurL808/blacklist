@@ -51,8 +51,8 @@ const AddressAutocomplete = ({ ...props }) => {
         addressRef.current[addressType] = val;
       }
     }
-    if(props.onAddressChange){
-      return props.onAddressChange(addressRef.current)
+    if(props.onChange){
+      return props.onChange(addressRef.current)
     }
     setAddress(addressRef.current);
   };
