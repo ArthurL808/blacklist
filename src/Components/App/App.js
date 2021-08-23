@@ -23,7 +23,7 @@ function App() {
           path="/deragatoryMarks/onPerson/:id"
           component={IndividualPerson}
         />
-        <ProtectedRoute exact path="/myblacklist/:id" component={MyBlackList} />
+        <ProtectedRoute exact path="/myBlacklist" component={MyBlackList} />
         <ProtectedRoute exact path="/huntboard" component={Huntboard} />
         <ProtectedRoute exact path="/AddPerson" component={AddPerson} />
         <Route component={NotFound} />

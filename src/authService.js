@@ -5,13 +5,12 @@ class Auth {
     this.authenticated = false;
   }
 
-  login(credentails,cb) {
+  login(credentails, cb) {
     return axios
       .post("/api/auth/login", credentails)
       .then((res) => {
-        
-        this.setToken(JSON.stringify(res.data.id))
-        cb()
+        console.log(res.data, "loggedIn");
+        cb();
       })
       .catch((err) => {
         console.log(err);
@@ -22,9 +21,8 @@ class Auth {
     return axios
       .post("/api/auth/logout")
       .then((res) => {
-        sessionStorage.removeItem('token')
-        console.log('logged out')
-        cb()
+        console.log(res.data, "logged out");
+        cb();
       })
       .catch((err) => {
         console.log(err);
@@ -32,19 +30,17 @@ class Auth {
   }
 
   isAuthenticated() {
-    const token = this.getToken()
-    return !!token
+    return axios
+      .get("/api/auth/loggedIn")
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
   }
-
-  setToken(token){
-    sessionStorage.setItem('token',token)
-  }
-
-  getToken(){
-    return sessionStorage.getItem('token')
-  }
-
-  
 }
 
 export default new Auth();

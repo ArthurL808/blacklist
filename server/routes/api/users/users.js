@@ -11,8 +11,8 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
-  return req.db.User.where({ id: req.params.id })
+router.get("/myBlacklist", (req, res) => {
+  return req.db.User.where({ id: req.user })
     .fetch({ withRelated: ["marks", "hunts"] })
     .then((results) => {
       res.json(results);

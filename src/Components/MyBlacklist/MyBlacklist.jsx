@@ -12,7 +12,7 @@ const MyBlacklist = ({ ...props }) => {
 
   useEffect(() => {
     axios
-      .get(`/api/users/${userId}`)
+      .get('/api/users/myBlacklist')
       .then((res) => {
         return setUser(res.data);
       })

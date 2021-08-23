@@ -20,7 +20,6 @@ const LoginForm = ({ ...props }) => {
 
   return (
     <div className={Styles.loginContainer}>
-      {auth.isAuthenticated() ? <Redirect to="/" /> : null}
       <header>
         <div className={Styles.loginHeader}>
           <h1>Login</h1>

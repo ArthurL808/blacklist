@@ -7,36 +7,37 @@ const User = require("../../../database/models/User");
 const saltRounds = 12;
 
 passport.use(
-  new LocalStrategy(
-    { usernameField: "email" },
-    function (username, password, done) {
-      return new User({ email: username })
-        .fetch()
-        .then((user) => {
-          if (user === null) {
-            return done(null, false, { message: "bad username or password" });
-          } else {
-            user = user.toJSON();
-            bcrypt.compare(password, user.password).then((res) => {
-              // Happy route: username exists, password matches
-              if (res) {
-                return done(null, user); //this is the user that goes to serialize
-              }
-              // Error Route: Username exists, password does not match
-              else {
-                return done(null, false, {
-                  message: "bad username or password",
-                });
-              }
-            });
-          }
-        })
-        .catch((err) => {
-          console.log("error: ", err);
-          return done(err);
-        });
-    }
-  )
+  new LocalStrategy({ usernameField: "email" }, function (
+    username,
+    password,
+    done
+  ) {
+    return new User({ email: username })
+      .fetch()
+      .then((user) => {
+        if (user === null) {
+          return done(null, false, { message: "bad username or password" });
+        } else {
+          user = user.toJSON();
+          bcrypt.compare(password, user.password).then((res) => {
+            // Happy route: username exists, password matches
+            if (res) {
+              return done(null, user); //this is the user that goes to serialize
+            }
+            // Error Route: Username exists, password does not match
+            else {
+              return done(null, false, {
+                message: "bad username or password",
+              });
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+        return done(err);
+      });
+  })
 );
 
 passport.serializeUser(function (user, done) {
@@ -51,6 +52,9 @@ passport.deserializeUser(function (user, done) {
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
   res.send(req.user);
+});
+router.get("/loggedIn", (req, res) => {
+  res.send(req.isAuthenticated());
 });
 
 router.post("/register", (req, res) => {
