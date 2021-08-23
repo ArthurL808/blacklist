@@ -103,7 +103,6 @@ export const addPersonAsync = (data) => {
   axios
     .post("/api/persons", data)
     .then((res) => {
-      console.log(res);
       return res.data;
     })
     .then((res) => {
@@ -118,7 +117,6 @@ export const addAddressAsync = (address) => {
   axios
     .post("/api/addresses", address)
     .then((res) => {
-      console.log(res);
       return res;
     })
     .catch((err) => {

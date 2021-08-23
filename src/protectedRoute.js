@@ -9,7 +9,6 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     auth
       .isAuthenticated()
       .then((res) => {
-        console.log(res, "authResponse");
         setIsAuthenticated(res);
       })
       .catch((err) => {

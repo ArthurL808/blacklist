@@ -45,7 +45,6 @@ class Home extends Component {
               <h3>Latest Blacklisted Clients</h3>
               {/* need this to be more dynamic */}
               {this.props.deragatoryMarks.slice((0, 5)).map((recentMarks) => {
-                console.log(recentMarks);
                 return (
                   <div className={Styles.card} key={recentMarks.id}>
                     <a

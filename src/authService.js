@@ -9,7 +9,7 @@ class Auth {
     return axios
       .post("/api/auth/login", credentails)
       .then((res) => {
-        console.log(res.data, "loggedIn");
+        console.log("logged in");
         cb();
       })
       .catch((err) => {
@@ -21,7 +21,7 @@ class Auth {
     return axios
       .post("/api/auth/logout")
       .then((res) => {
-        console.log(res.data, "logged out");
+        console.log( "logged out");
         cb();
       })
       .catch((err) => {
