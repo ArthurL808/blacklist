@@ -41,8 +41,13 @@ passport.use(
 );
 
 passport.serializeUser(function (user, done) {
+  let userData = {
+    id: user.id,
+    name: user.name,
+    company_name: user.company_name,
+  };
   console.log("serializing");
-  return done(null, user.id);
+  return done(null, userData);
 });
 
 passport.deserializeUser(function (user, done) {
@@ -54,7 +59,8 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
   res.send(req.user);
 });
 router.get("/loggedIn", (req, res) => {
-  res.send(req.isAuthenticated());
+  req.user.isAuthenticated = req.isAuthenticated();
+  res.send(req.user);
 });
 
 router.post("/register", (req, res) => {

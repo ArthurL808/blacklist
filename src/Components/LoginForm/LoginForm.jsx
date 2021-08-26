@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import Styles from "./LoginForm.module.scss";
 import auth from "../../authService";
+import { loginAction } from "../../actions";
+import { useDispatch } from "react-redux";
 
 const LoginForm = ({ ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,9 +16,16 @@ const LoginForm = ({ ...props }) => {
       email: email,
       password: password,
     };
-    auth.login(credentials, () => {
-      props.history.push("/");
-    });
+    dispatch(loginAction(credentials))
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        props.history.push("/");
+      });
   };
 
   return (

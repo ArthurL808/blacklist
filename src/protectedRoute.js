@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
-import auth from "./authService";
+import { isAuthenticatedAction } from "./actions";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    auth
-      .isAuthenticated()
+    dispatch(isAuthenticatedAction())
       .then((res) => {
-        setIsAuthenticated(res);
-      })
-      .catch((err) => {
-        console.error(err);
+        console.log(res);
       })
       .finally(() => {
         setIsLoading(false);
@@ -23,12 +23,12 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if(!isLoading){
-        if (isAuthenticated === true) {
-          return <Component {...props} />;
-        } else {
-          return <Redirect to="/login" />;
-        }
+        if (!isLoading) {
+          if (user.isAuthenticated === true) {
+            return <Component {...props} />;
+          } else {
+            return <Redirect to="/login" />;
+          }
         }
       }}
     />

@@ -21,7 +21,7 @@ class Auth {
     return axios
       .post("/api/auth/logout")
       .then((res) => {
-        console.log( "logged out");
+        console.log("logged out");
         cb();
       })
       .catch((err) => {
@@ -33,8 +33,7 @@ class Auth {
     return axios
       .get("/api/auth/loggedIn")
       .then((res) => {
-        console.log(res.data);
-        return res.data;
+        return res.data.isAuthenticated;
       })
       .catch((err) => {
         console.log(err);

@@ -17,6 +17,8 @@ export const ADD_PERSON = "ADD_PERSON";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
+export const IS_AUTHENTICATED = "IS_AUTHENTICATED";
+// export const LOAD_USER = "LOAD_USER";
 
 export const loadDeragatoryMarksAsync = () => (dispatch) => {
   axios
@@ -135,23 +137,24 @@ export const DeragatoryMarkInputAsync = (deragatoryMark) => {
     });
 };
 
-// export const loginAction = (credentails) => async (dispatch) => {
-//   await axios
-//     .post("/api/auth/login", credentails)
-//     .then((res) => {
-//       return dispatch({
-//         type: LOGIN_SUCCESS,
-//         payload: res.data,
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       return dispatch({
-//         type: LOGIN_ERROR,
-//         payload: err.message
-//       })
-//     });
-// };
+export const loginAction = (credentails) => (dispatch) => {
+  return axios
+    .post("/api/auth/login", credentails)
+    .then((res) => {
+      console.log(res.data);
+      return dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return dispatch({
+        type: LOGIN_ERROR,
+        payload: err.message,
+      });
+    });
+};
 
 // export const logoutAction = () => async (dispatch) => {
 //   await axios
@@ -166,3 +169,18 @@ export const DeragatoryMarkInputAsync = (deragatoryMark) => {
 //       console.log(err);
 //     });
 // };
+
+export const isAuthenticatedAction = () => (dispatch) => {
+  return axios
+    .get("/api/auth/loggedIn")
+    .then((res) => {
+      return dispatch({
+        type: IS_AUTHENTICATED,
+        payload: res.data
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    })
+};

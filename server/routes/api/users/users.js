@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/myBlacklist", (req, res) => {
-  return req.db.User.where({ id: req.user })
+  return req.db.User.where({ id: req.user.id })
     .fetch({ withRelated: ["marks", "hunts"] })
     .then((results) => {
       res.json(results);

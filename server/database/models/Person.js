@@ -17,13 +17,6 @@ class Person extends bookshelf.Model {
     return this.belongsToMany("User").through("DeragatoryMark",'on_person');
   }
 
-  reasons() {
-    return this.belongsToMany("Reason").through(
-      "DeragatoryMark",
-      "on_person",
-      "reason_id"
-    );
-  }
 
   marks() {
     return this.hasMany("DeragatoryMark",'on_person','id');
