@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 // import Styles from "./IndividualPerson.module.scss";
 import DeragatoryMarkInput from "../../DeragatoryMark/DeragatoryMarkInput";
 import DeragatoryMarks from "../../DeragatoryMark";
 // import PersonMarks from "../PersonMarks";
 import moment from "moment";
-import auth from "../../../authService";
 
 const IndividualPerson = ({ ...props }) => {
+  const user = useSelector((state) => state.user);
   const id = parseInt(props.match.params.id);
   const [addMark, setAddMark] = useState(false);
-  // const [currentUser, setCurrentUser] = useState(0);
   const [personMarks, setPersonMarks] = useState([]);
   const [person, setPerson] = useState({
     id: null,
@@ -31,10 +31,8 @@ const IndividualPerson = ({ ...props }) => {
   });
 
   useEffect(() => {
-    // const user = auth.getToken();
     const personRequest = axios.get(`/api/persons/${id}`);
     const personMarksRequest = axios.get(`/api/deragatoryMarks/onPerson/${id}`);
-    // setCurrentUser(parseInt(user));
     axios
       .all([personRequest, personMarksRequest])
       .then(
@@ -96,7 +94,7 @@ const IndividualPerson = ({ ...props }) => {
               );
             })}
 
-            {/* {personMarks.some((mark) => mark.user_id === currentUser) ? null : (
+            {personMarks.some((mark) => mark.user_id === user.id) ? null : (
               <button
                 onClick={() => {
                   setAddMark(!addMark);
@@ -104,7 +102,7 @@ const IndividualPerson = ({ ...props }) => {
               >
                 +Add Mark
               </button>
-            )} */}
+            )}
 
             {addMark ? (
               <DeragatoryMarkInput
