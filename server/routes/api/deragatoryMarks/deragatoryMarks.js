@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   return req.db.DeragatoryMark.fetchAll({
-    withRelated: ["createdBy", "onPerson", "reason"],
+    withRelated: ["createdBy", "onPerson"],
   })
     .then((results) => {
       return res.json(results);

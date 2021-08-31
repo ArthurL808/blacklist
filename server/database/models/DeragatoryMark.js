@@ -9,9 +9,6 @@ class DeragatoryMark extends bookshelf.Model {
     return true;
   }
 
-  reason() {
-    return this.belongsTo("Reason");
-  }
   createdBy() {
     return this.belongsTo("User");
   }

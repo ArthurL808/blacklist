@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 import Styles from "./LoginForm.module.scss";
-import auth from "../../authService";
 import { loginAction } from "../../actions";
 import { useDispatch } from "react-redux";
 

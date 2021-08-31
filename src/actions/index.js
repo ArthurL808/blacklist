@@ -3,6 +3,8 @@ import auth from "../authService";
 
 export const LOAD_DERAGATORYMARKS = "LOAD_DERAGATORYMARKS";
 
+export const LOAD_BLACKLIST = "LOAD_BLACKLIST";
+
 export const PERSON_SEARCH = "PERSON_SEARCH";
 export const PERSON_SEARCH_FAIL = "PERSON_SEARCH_FAIL";
 
@@ -18,6 +20,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 export const IS_AUTHENTICATED = "IS_AUTHENTICATED";
+
 // export const LOAD_USER = "LOAD_USER";
 
 export const loadDeragatoryMarksAsync = () => (dispatch) => {
@@ -34,6 +37,20 @@ export const loadDeragatoryMarksAsync = () => (dispatch) => {
         auth.logout();
       }
       console.log(err);
+    });
+};
+
+export const loadMyBlacklist = () => (dispatch) => {
+  axios
+    .get("/api/users/myBlacklist")
+    .then((res) => {
+      dispatch({
+        type: LOAD_BLACKLIST,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
     });
 };
 
@@ -176,11 +193,11 @@ export const isAuthenticatedAction = () => (dispatch) => {
     .then((res) => {
       return dispatch({
         type: IS_AUTHENTICATED,
-        payload: res.data
-      })
+        payload: res.data,
+      });
     })
     .catch((err) => {
       console.log(err);
       return false;
-    })
+    });
 };
