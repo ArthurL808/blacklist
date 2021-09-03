@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AddressAutocomplete from "../../AddressAutocomplete";
-import DeragatoryMarkInput from "../../DeragatoryMark/DeragatoryMarkInput";
+import DeragatoryMarkForm from "../../DeragatoryMark/DeragatoryMarkForm";
 import axios from "axios";
 
 class AddPerson extends Component {
@@ -163,7 +163,7 @@ class AddPerson extends Component {
           <input type="file" name="image" onChange={this.handlePersonChange} />
 
           <AddressAutocomplete onChange={this.handleAddressChange} />
-          <DeragatoryMarkInput
+          <DeragatoryMarkForm
             mark={this.state.deragatoryMark}
             onChange={this.handleMarkChange}
           />

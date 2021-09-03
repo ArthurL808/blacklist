@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 // import Styles from "./IndividualPerson.module.scss";
-import DeragatoryMarkInput from "../../DeragatoryMark/DeragatoryMarkInput";
+import DeragatoryMarkForm from "../../DeragatoryMark/DeragatoryMarkForm";
 import DeragatoryMarks from "../../DeragatoryMark";
-// import PersonMarks from "../PersonMarks";
 import moment from "moment";
 
 const IndividualPerson = ({ ...props }) => {
   const user = useSelector((state) => state.user);
   const id = parseInt(props.match.params.id);
-  const [addMark, setAddMark] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
   const [personMarks, setPersonMarks] = useState([]);
   const [person, setPerson] = useState({
     id: null,
@@ -97,17 +96,17 @@ const IndividualPerson = ({ ...props }) => {
             {personMarks.some((mark) => mark.user_id === user.id) ? null : (
               <button
                 onClick={() => {
-                  setAddMark(!addMark);
+                  setOpenForm(!openForm);
                 }}
               >
-                +Add Mark
+                {openForm ? "Close" : "Add Mark"}
               </button>
             )}
 
-            {addMark ? (
-              <DeragatoryMarkInput
-                addMark={addMark}
-                setAddMark={setAddMark}
+            {openForm ? (
+              <DeragatoryMarkForm
+                openForm={openForm}
+                setOpenForm={setOpenForm}
                 on_person={person.id}
               />
             ) : null}

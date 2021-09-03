@@ -15,9 +15,20 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   return req.db.DeragatoryMark.where({ id: req.params.id })
-    .fetch({withRelated:['onPerson','createdBy']})
+    .fetch({ withRelated: ["onPerson", "createdBy"] })
     .then((results) => {
       return res.json(results);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+});
+
+router.get("/edit/:id", (req, res) => {
+  return req.db.DeragatoryMark.where({ id: req.params.id })
+    .fetch()
+    .then((res) => {
+      return res.json(res);
     })
     .catch((err) => {
       console.error(err);
@@ -36,7 +47,7 @@ router.get("/onPerson/:id", (req, res) => {
 });
 router.post("/onPerson/:id", (req, res) => {
   return req.db.DeragatoryMark.forge({
-    user_id: req.user,
+    user_id: req.user.id,
     on_person: req.params.id,
     non_payment: req.body.non_payment,
     fraud: req.body.fraud,
@@ -59,7 +70,7 @@ router.post("/onPerson/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   return req.db.DeragatoryMark.forge({
-    user_id: req.user,
+    user_id: req.user.id,
     on_person: req.body.on_person,
     non_payment: req.body.non_payment,
     fraud: req.body.fraud,
@@ -84,9 +95,27 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+  console.log(req.db.DeragatoryMark.forge({ id: req.params.id }));
   return req.db.DeragatoryMark.forge({ id: req.params.id })
-    .save({ reason_id: req.body.reason_id, person_role: req.body.person_role })
+    .save(
+      {
+        user_id: req.user.id,
+        on_person: req.params.id,
+        non_payment: req.body.non_payment,
+        fraud: req.body.fraud,
+        skipped_bail: req.body.skipped_bail,
+        aggressive: req.body.aggressive,
+        hiding_fugitive: req.body.hiding_fugitive,
+        non_compliance_with_terms: req.body.non_compliance_with_terms,
+        no_communication: req.body.no_communication,
+        other: req.body.other,
+      },
+      {
+        patch: true,
+      }
+    )
     .then((results) => {
+      console.log(results);
       res.json(results);
     })
     .catch((err) => {

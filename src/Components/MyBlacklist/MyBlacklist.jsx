@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadMyBlacklist } from "../../actions";
-// import EditDeragatoryMarks from "./EditDeragatoryMarks";
 import DeragatoryMarks from "../DeragatoryMark";
+
+
 const MyBlacklist = ({ ...props }) => {
   const user = useSelector((state) => state.user);
   const deragatoryMarks = useSelector((state) => state.deragatoryMarks);
@@ -10,6 +11,7 @@ const MyBlacklist = ({ ...props }) => {
   useEffect(() => {
     dispatch(loadMyBlacklist());
   }, []);
+
 
   return (
     <div>
