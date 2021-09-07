@@ -40,7 +40,11 @@ const DeragatoryMarkForm = ({ ...props }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (props.editMode) {
-      axios.put(`/api/deragatoryMarks/${props.mark.id}`, mark);
+      return axios
+        .put(`/api/deragatoryMarks/${props.mark.id}`, mark)
+        .then((res) => {
+          console.log(res.data);
+        });
     }
     axios.post(`/api/deragatoryMarks/onPerson/${props.on_person}`, mark);
   };

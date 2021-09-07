@@ -95,27 +95,24 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  console.log(req.db.DeragatoryMark.forge({ id: req.params.id }));
+  console.log(req.body);
+  let editData = {
+    user_id: req.user.id,
+    on_person: req.body.on_person,
+    non_payment: req.body.non_payment,
+    fraud: req.body.fraud,
+    skipped_bail: req.body.skipped_bail,
+    aggressive: req.body.aggressive,
+    hiding_fugitive: req.body.hiding_fugitive,
+    non_compliance_with_terms: req.body.non_compliance_with_terms,
+    no_communication: req.body.no_communication,
+    other: req.body.other,
+  };
   return req.db.DeragatoryMark.forge({ id: req.params.id })
-    .save(
-      {
-        user_id: req.user.id,
-        on_person: req.params.id,
-        non_payment: req.body.non_payment,
-        fraud: req.body.fraud,
-        skipped_bail: req.body.skipped_bail,
-        aggressive: req.body.aggressive,
-        hiding_fugitive: req.body.hiding_fugitive,
-        non_compliance_with_terms: req.body.non_compliance_with_terms,
-        no_communication: req.body.no_communication,
-        other: req.body.other,
-      },
-      {
-        patch: true,
-      }
-    )
+    .save(editData, {
+      patch: true,
+    })
     .then((results) => {
-      console.log(results);
       res.json(results);
     })
     .catch((err) => {
