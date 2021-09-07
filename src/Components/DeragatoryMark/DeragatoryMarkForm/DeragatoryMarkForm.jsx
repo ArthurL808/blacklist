@@ -27,6 +27,7 @@ const DeragatoryMarkForm = ({ ...props }) => {
         })
         .finally(setLoading(false));
     }
+    setLoading(false);
   }, []);
 
   const handleChange = (e) => {
