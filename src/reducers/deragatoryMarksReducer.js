@@ -5,7 +5,7 @@ const deragatoryMarksReducer = (state = [], action) => {
     case LOAD_DERAGATORYMARKS:
       return (state = [...state.concat(action.payload)]);
     case LOAD_BLACKLIST:
-      return [...action.payload];
+      return [...action.payload.marks];
     default:
       return state;
   }

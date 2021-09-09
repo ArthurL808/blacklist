@@ -2,16 +2,14 @@ import axios from "axios";
 import auth from "../authService";
 
 export const LOAD_DERAGATORYMARKS = "LOAD_DERAGATORYMARKS";
-
 export const LOAD_BLACKLIST = "LOAD_BLACKLIST";
+export const LOAD_PERSON = "LOAD_PERSON";
+export const LOAD_PERSON_MARKS = "LOAD_PERSON_MARKS";
+export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
+export const LOAD_USER_HUNTS = "LOAD_USER_HUNTS";
 
 export const PERSON_SEARCH = "PERSON_SEARCH";
 export const PERSON_SEARCH_FAIL = "PERSON_SEARCH_FAIL";
-
-export const LOAD_PERSON = "LOAD_PERSON";
-export const LOAD_PERSON_MARKS = "LOAD_PERSON_MARKS";
-
-export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
 
 export const ADD_ADDRESS = "ADD_ADDRESS";
 export const ADD_PERSON = "ADD_PERSON";
@@ -41,14 +39,24 @@ export const loadDeragatoryMarksAsync = () => (dispatch) => {
 };
 
 export const loadMyBlacklist = () => (dispatch) => {
+  let marksRequest = axios.get("/api/users/myBlacklist");
+  let huntsRequest = axios.get("/api/hunts/myBlacklist");
+
   axios
-    .get("/api/users/myBlacklist")
-    .then((res) => {
-      dispatch({
-        type: LOAD_BLACKLIST,
-        payload: res.data,
-      });
-    })
+    .all([marksRequest, huntsRequest])
+    .then(
+      axios.spread((...response) => {
+        let marksResponse = response[0].data;
+        let huntsResponse = response[1].data;
+        dispatch({
+          type: LOAD_BLACKLIST,
+          payload: {
+            marks: marksResponse,
+            hunts: huntsResponse,
+          },
+        });
+      })
+    )
     .catch((err) => {
       console.error(err);
     });

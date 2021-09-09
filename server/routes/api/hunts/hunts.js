@@ -13,10 +13,23 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/myBlacklist", (req, res) => {
+  return req.db.Hunt.where({ user_id: req.user.id })
+    .fetchAll({
+      withRelated: ["person", "associates", "gender"],
+    })
+    .then((results) => {
+      return res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.get("/active", (req, res) => {
   return req.db.Hunt.where({ active: true })
     .fetchAll({
-      withRelated: ["person", "user", "associates",'gender'],
+      withRelated: ["person", "user", "associates", "gender"],
     })
     .then((results) => {
       return res.json(results);
