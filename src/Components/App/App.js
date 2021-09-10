@@ -4,7 +4,7 @@ import "./App.css";
 import { ProtectedRoute } from "../../protectedRoute";
 import Header from "../Header";
 import Home from "../Home";
-import IndividualPerson from "../Persons/individualPerson";
+import IndividualPersonPage from "../Persons/individualPersonPage";
 import MyBlackList from "../MyBlacklist";
 import Huntboard from "../Huntboard";
 import AddPerson from "../Persons/AddPerson";
@@ -21,7 +21,7 @@ function App() {
         <ProtectedRoute
           exact
           path="/deragatoryMarks/onPerson/:id"
-          component={IndividualPerson}
+          component={IndividualPersonPage}
         />
         <ProtectedRoute exact path="/myBlacklist" component={MyBlackList} />
         <ProtectedRoute exact path="/huntboard" component={Huntboard} />

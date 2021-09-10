@@ -12,7 +12,6 @@ const MyBlacklist = ({ ...props }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadMyBlacklist());
-    console.log(hunts)
   }, []);
 
   return (

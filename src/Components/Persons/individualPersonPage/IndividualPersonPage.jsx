@@ -4,9 +4,10 @@ import axios from "axios";
 // import Styles from "./IndividualPerson.module.scss";
 import DeragatoryMarkForm from "../../DeragatoryMark/DeragatoryMarkForm";
 import DeragatoryMarks from "../../DeragatoryMark";
+import Persons from "../Persons";
 import moment from "moment";
 
-const IndividualPerson = ({ ...props }) => {
+const IndividualPersonPage = ({ ...props }) => {
   const user = useSelector((state) => state.user);
   const id = parseInt(props.match.params.id);
   const [openForm, setOpenForm] = useState(false);
@@ -49,10 +50,7 @@ const IndividualPerson = ({ ...props }) => {
     <>
       {person && (
         <div>
-          <img src={person.image_url} alt="client" />
-          <h3>
-            {person.last_name}, {person.first_name}
-          </h3>
+          <Persons person={person}/>
           <p>Addresses:</p>
           {person.addresses.map((address) => {
             return (
@@ -62,11 +60,6 @@ const IndividualPerson = ({ ...props }) => {
               </div>
             );
           })}
-          <p>Gender: {person.gender.gender}</p>
-          <p>
-            DoB: {moment(person.dob).format("MMM DD, YYYY")} Age:{" "}
-            {moment(person.dob).toNow(true)}
-          </p>
           <div>
             <h4>Associates</h4>
             {person.associates.map((associate) => {
@@ -117,4 +110,4 @@ const IndividualPerson = ({ ...props }) => {
   );
 };
 
-export default IndividualPerson;
+export default IndividualPersonPage;
