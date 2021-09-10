@@ -4,10 +4,10 @@ import "./App.css";
 import { ProtectedRoute } from "../../protectedRoute";
 import Header from "../Header";
 import Home from "../Home";
-import IndividualPersonPage from "../Persons/individualPersonPage";
+import PersonsPage from "../PersonsPage";
 import MyBlackList from "../MyBlacklist";
 import Huntboard from "../Huntboard";
-import AddPerson from "../Persons/AddPerson";
+// import AddPerson from "../Persons/AddPerson";
 import LoginForm from "../LoginForm";
 import NotFound from "../NotFound";
 
@@ -21,11 +21,11 @@ function App() {
         <ProtectedRoute
           exact
           path="/deragatoryMarks/onPerson/:id"
-          component={IndividualPersonPage}
+          component={PersonsPage}
         />
         <ProtectedRoute exact path="/myBlacklist" component={MyBlackList} />
         <ProtectedRoute exact path="/huntboard" component={Huntboard} />
-        <ProtectedRoute exact path="/AddPerson" component={AddPerson} />
+        {/* <ProtectedRoute exact path="/AddPerson" component={AddPerson} /> */}
         <Route component={NotFound} />
       </Switch>
     </div>

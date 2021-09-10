@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { loadPersonPage } from "../../actions";
+import DeragatoryMarkForm from "../DeragatoryMark/DeragatoryMarkForm";
+import DeragatoryMarks from "../DeragatoryMark";
+import Persons from "./Persons/Persons";
 // import Styles from "./IndividualPerson.module.scss";
-import DeragatoryMarkForm from "../../DeragatoryMark/DeragatoryMarkForm";
-import DeragatoryMarks from "../../DeragatoryMark";
-import Persons from "../Persons";
 import moment from "moment";
 
-const IndividualPersonPage = ({ ...props }) => {
+const PersonsPage = ({ ...props }) => {
   const user = useSelector((state) => state.user);
+  const persons = useSelector((state) => state.persons.individualPerson);
+  const dispatch = useDispatch();
   const id = parseInt(props.match.params.id);
   const [openForm, setOpenForm] = useState(false);
   const [personMarks, setPersonMarks] = useState([]);
@@ -31,26 +33,15 @@ const IndividualPersonPage = ({ ...props }) => {
   });
 
   useEffect(() => {
-    const personRequest = axios.get(`/api/persons/${id}`);
-    const personMarksRequest = axios.get(`/api/deragatoryMarks/onPerson/${id}`);
-    axios
-      .all([personRequest, personMarksRequest])
-      .then(
-        axios.spread((...response) => {
-          setPerson(response[0].data);
-          setPersonMarks(response[1].data);
-        })
-      )
-      .catch((err) => {
-        console.error(err);
-      });
+    dispatch(loadPersonPage(id));
   }, []);
 
   return (
     <>
       {person && (
         <div>
-          <Persons person={person}/>
+          <Persons person={persons} />
+
           <p>Addresses:</p>
           {person.addresses.map((address) => {
             return (
@@ -110,4 +101,4 @@ const IndividualPersonPage = ({ ...props }) => {
   );
 };
 
-export default IndividualPersonPage;
+export default PersonsPage;

@@ -1,7 +1,7 @@
 import {
   PERSON_SEARCH,
   PERSON_SEARCH_FAIL,
-  LOAD_PERSON,
+  LOAD_PERSON_PAGE,
   LOAD_PERSON_MARKS,
 } from "../actions/index";
 
@@ -34,7 +34,7 @@ const initialState = {
 
 const personsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_PERSON:
+    case LOAD_PERSON_PAGE:
       return {
         ...state,
         individualPerson: {

@@ -3,7 +3,7 @@ import auth from "../authService";
 
 export const LOAD_DERAGATORYMARKS = "LOAD_DERAGATORYMARKS";
 export const LOAD_BLACKLIST = "LOAD_BLACKLIST";
-export const LOAD_PERSON = "LOAD_PERSON";
+export const LOAD_PERSON_PAGE = "LOAD_PERSON_PAGE";
 export const LOAD_PERSON_MARKS = "LOAD_PERSON_MARKS";
 export const LOAD_ACTIVE_HUNTS = "LOAD_ACTIVE_HUNTS";
 export const LOAD_USER_HUNTS = "LOAD_USER_HUNTS";
@@ -86,23 +86,20 @@ export const searchPersonsAsync = (searchTerm) => async (dispatch) => {
     });
 };
 
-//fix this so it is only making one request. make another function?
-export const loadPersonAsync = (id) => (dispatch) => {
-  let requestPerson = axios.get(`/api/persons/${id}`);
-  let requestDeragatoryMarksOnPerson = axios.get(
-    `/api/deragatoryMarks/onPerson/${id}`
-  );
+export const loadPersonPage = (id) => (dispatch) => {
+  let personRequest = axios.get(`/api/persons/${id}`);
+  let personMarkRequest = axios.get(`/api/deragatoryMarks/onPerson/${id}`);
   axios
-    .all([requestPerson, requestDeragatoryMarksOnPerson])
+    .all([personRequest, personMarkRequest])
     .then(
       axios.spread((...response) => {
         let personResponse = response[0].data;
-        let deragatoryMarksOnPersonResponse = response[1].data;
+        let personMarkResponse = response[1].data;
         dispatch({
-          type: LOAD_PERSON,
+          type: LOAD_PERSON_PAGE,
           payload: {
             individualPerson: personResponse,
-            marks: deragatoryMarksOnPersonResponse,
+            marks: personMarkResponse,
           },
         });
       })
