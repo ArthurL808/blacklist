@@ -5,6 +5,7 @@ import DeragatoryMarkForm from "../DeragatoryMark/DeragatoryMarkForm";
 import DeragatoryMarks from "../DeragatoryMark";
 import Persons from "./Persons/Persons";
 import Addresses from "../Addresses";
+import Associates from "../Associates";
 // import Styles from "./IndividualPerson.module.scss";
 
 const PersonsPage = ({ ...props }) => {
@@ -23,23 +24,14 @@ const PersonsPage = ({ ...props }) => {
       {persons && (
         <div>
           <Persons person={persons} />
-
-          <p>Addresses:</p>
+          <h5>Addresses:</h5>
           {persons.addresses.map((address) => {
             return <Addresses key={address.id} address={address} />;
           })}
           <div>
             <h4>Associates</h4>
             {persons.associates.map((associate) => {
-              return (
-                <div key={associate.id}>
-                  <p>
-                    {associate.last_name}, {associate.first_name}
-                  </p>
-                  <p>Nickname: {associate.nickname}</p>
-                  <p>{associate.relationship}</p>
-                </div>
-              );
+              return <Associates associate={associate} key={associate.id} />;
             })}
           </div>
           <div>
