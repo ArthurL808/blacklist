@@ -4,8 +4,8 @@ import { loadPersonPage } from "../../actions";
 import DeragatoryMarkForm from "../DeragatoryMark/DeragatoryMarkForm";
 import DeragatoryMarks from "../DeragatoryMark";
 import Persons from "./Persons/Persons";
+import Addresses from "../Addresses";
 // import Styles from "./IndividualPerson.module.scss";
-import moment from "moment";
 
 const PersonsPage = ({ ...props }) => {
   const user = useSelector((state) => state.user);
@@ -13,24 +13,6 @@ const PersonsPage = ({ ...props }) => {
   const dispatch = useDispatch();
   const id = parseInt(props.match.params.id);
   const [openForm, setOpenForm] = useState(false);
-  const [personMarks, setPersonMarks] = useState([]);
-  const [person, setPerson] = useState({
-    id: null,
-    first_name: "",
-    last_name: "",
-    addresses: [],
-    dob: "",
-    gender_id: 0,
-    created_at: "",
-    updated_at: "",
-    associates: [],
-    gender: {
-      id: 0,
-      gender: "",
-      created_at: "",
-      updated_at: "",
-    },
-  });
 
   useEffect(() => {
     dispatch(loadPersonPage(id));
@@ -38,22 +20,17 @@ const PersonsPage = ({ ...props }) => {
 
   return (
     <>
-      {person && (
+      {persons && (
         <div>
           <Persons person={persons} />
 
           <p>Addresses:</p>
-          {person.addresses.map((address) => {
-            return (
-              <div key={address.id}>
-                {address.street_address}, {address.zipcode} Apt#:{" "}
-                {address.apt_number}
-              </div>
-            );
+          {persons.addresses.map((address) => {
+            return <Addresses key={address.id} address={address} />;
           })}
           <div>
             <h4>Associates</h4>
-            {person.associates.map((associate) => {
+            {persons.associates.map((associate) => {
               return (
                 <div key={associate.id}>
                   <p>
@@ -68,7 +45,7 @@ const PersonsPage = ({ ...props }) => {
           <div>
             <h4>Blacklist Offenses</h4>
 
-            {personMarks.map((mark) => {
+            {persons.marks.map((mark) => {
               return (
                 <div key={mark.id}>
                   <h3>{mark.createdBy.company_name}</h3>
@@ -77,7 +54,7 @@ const PersonsPage = ({ ...props }) => {
               );
             })}
 
-            {personMarks.some((mark) => mark.user_id === user.id) ? null : (
+            {persons.marks.some((mark) => mark.user_id === user.id) ? null : (
               <button
                 onClick={() => {
                   setOpenForm(!openForm);
@@ -91,7 +68,7 @@ const PersonsPage = ({ ...props }) => {
               <DeragatoryMarkForm
                 openForm={openForm}
                 setOpenForm={setOpenForm}
-                on_person={person.id}
+                on_person={persons.id}
               />
             ) : null}
           </div>
